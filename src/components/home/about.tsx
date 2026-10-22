@@ -3,9 +3,10 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
-import { advantages, countries } from "@/lib/site";
+import { useI18n } from "@/i18n/client";
 
 export function About() {
+  const { m } = useI18n();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -32,19 +33,17 @@ export function About() {
       <div className="mx-auto grid w-full max-w-7xl gap-14 px-4 py-24 sm:px-8 lg:grid-cols-[1.15fr_1fr] lg:py-36">
         <div>
           <h2 className="max-w-2xl text-balance font-display text-[clamp(2rem,4.6vw,3.75rem)] font-bold leading-[1.02] tracking-[-0.03em]">
-            С 2015 года возим сырьё для производств Узбекистана
+            {m.home.aboutTitle}
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-starch/75">
-            ООО «RIGHT TO WIN» специализируется на обеспечении отечественных
-            производителей и потребителей крахмало-паточной продукцией высшего
-            сорта.
+            {m.home.aboutLead}
           </p>
           <div className="mt-12">
             <h3 className="text-sm font-medium text-starch/60">
-              Заводы-производители
+              {m.home.makers}
             </h3>
             <ul className="mt-4 flex flex-wrap gap-3">
-              {countries.map((c) => (
+              {m.data.countries.map((c) => (
                 <li
                   key={c}
                   className="rounded-full bg-ink-2 px-5 py-2.5 font-display text-lg font-semibold ring-1 ring-white/15"
@@ -56,8 +55,8 @@ export function About() {
           </div>
         </div>
 
-        <ul className="grid content-center divide-y divide-white/15 self-center">
-          {advantages.map((a, i) => (
+        <ul className="grid content-center self-center divide-y divide-white/15">
+          {m.data.advantages.map((a, i) => (
             <motion.li
               key={a}
               initial={{ x: 20 }}

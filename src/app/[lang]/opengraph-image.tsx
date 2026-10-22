@@ -1,10 +1,35 @@
 import { ImageResponse } from "next/og";
+import { defaultLocale, hasLocale } from "@/i18n/config";
+import { getMessages } from "@/i18n/messages";
 
-export const alt = "RTW — крахмал и патока оптом со склада в Ташкенте";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+export async function generateImageMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const m = getMessages(hasLocale(lang) ? lang : defaultLocale);
+  return [{ id: "og", alt: m.meta.ogAlt, size, contentType }];
+}
+
+export default async function OpengraphImage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const m = getMessages(hasLocale(lang) ? lang : defaultLocale);
+  const line = {
+    display: "flex",
+    fontSize: 104,
+    fontWeight: 800,
+    lineHeight: 1,
+    letterSpacing: -4,
+  } as const;
+
   return new ImageResponse(
     <div
       style={{
@@ -30,28 +55,11 @@ export default function OpengraphImage() {
         RTW · Right to Win
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 104,
-            fontWeight: 800,
-            lineHeight: 1,
-            letterSpacing: -4,
-          }}
-        >
-          Крахмал и патока
-        </div>
-        <div
-          style={{
-            display: "flex",
-            fontSize: 104,
-            fontWeight: 800,
-            lineHeight: 1,
-            letterSpacing: -4,
-          }}
-        >
-          оптом
-        </div>
+        {m.meta.ogLines.map((l) => (
+          <div key={l} style={line}>
+            {l}
+          </div>
+        ))}
         <div
           style={{
             display: "flex",
@@ -60,7 +68,7 @@ export default function OpengraphImage() {
             opacity: 0.85,
           }}
         >
-          Склад в Ташкенте · бесплатная доставка по городу
+          {m.meta.ogSub}
         </div>
       </div>
     </div>,

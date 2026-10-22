@@ -7,36 +7,48 @@ import { BatchCalculator } from "@/components/batch-calculator";
 import { ProductCard } from "@/components/product-card";
 import { RichBlocks } from "@/components/rich-blocks";
 import { LeadSection } from "@/components/lead-section";
-import {
-  categoryName,
-  formatSum,
-  productBySlug,
-  products,
-} from "@/lib/catalog";
+import { formatNumber, locales, lp } from "@/i18n/config";
+import { getMessages } from "@/i18n/messages";
+import { alternates, resolveLang } from "@/i18n/seo";
+import { getProducts, productSlugs } from "@/lib/catalog";
 import { articles } from "@/lib/site";
 
+/** Every page is prerendered per language; the params read is a blocking, not streamed, step. */
+export const instant = false;
+
 export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return locales.flatMap((lang) =>
+    productSlugs.map((slug) => ({ lang, slug })),
+  );
 }
 
 export async function generateMetadata({
   params,
-}: PageProps<"/catalog/[slug]">): Promise<Metadata> {
+}: PageProps<"/[lang]/catalog/[slug]">): Promise<Metadata> {
+  const lang = await resolveLang(params);
   const { slug } = await params;
-  const p = productBySlug(slug);
+  const m = getMessages(lang);
+  const p = getProducts(m).find((x) => x.slug === slug);
   return p
     ? {
         title: p.name,
-        description: `${p.lead} Оптовая цена ${formatSum(p.pricePerKg)} сум/кг, склад в Ташкенте.`,
+        description: m.product.metaDescription(
+          p.lead,
+          formatNumber(lang, p.pricePerKg),
+        ),
+        alternates: alternates(lang, `/catalog/${slug}`),
       }
     : {};
 }
 
 export default async function ProductPage({
   params,
-}: PageProps<"/catalog/[slug]">) {
+}: PageProps<"/[lang]/catalog/[slug]">) {
+  const lang = await resolveLang(params);
   const { slug } = await params;
-  const product = productBySlug(slug);
+  const m = getMessages(lang);
+  const products = getProducts(m);
+  const product = products.find((p) => p.slug === slug);
   if (!product) notFound();
 
   const related = [
@@ -46,47 +58,47 @@ export default async function ProductPage({
     ...products.filter((p) => p.category !== product.category),
   ];
   const article = articles.find((a) => a.productSlug === product.slug);
+  const categoryName = m.data.categories[product.category].name;
   const facts = [
     {
       icon: Warehouse,
-      title: "В наличии на складе в Ташкенте",
-      text: "Отгружаем без ожидания поставки",
+      title: m.product.factStock,
+      text: m.product.factStockText,
     },
     {
       icon: Truck,
-      title: product.freeDelivery ?? "Бесплатно по Ташкенту",
-      text: "Доставка в удобное время",
+      title: product.freeDelivery ?? m.product.factDeliveryDefault,
+      text: m.product.factDeliveryText,
     },
-    {
-      icon: CreditCard,
-      title: "Оплата",
-      text: "Перечислением, терминал UzCard, наличными",
-    },
+    { icon: CreditCard, title: m.product.factPay, text: m.product.factPayText },
   ];
 
   return (
     <main className="pt-24 lg:pt-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
-        <nav aria-label="Хлебные крошки" className="text-sm text-text-soft">
+        <nav
+          aria-label={m.common.breadcrumbs}
+          className="text-sm text-text-soft"
+        >
           <ol className="flex flex-wrap items-center gap-2">
             <li>
-              <Link href="/" className="hover:text-ink">
-                Главная
+              <Link href={lp(lang)} className="hover:text-ink">
+                {m.common.home}
               </Link>
             </li>
             <li aria-hidden>/</li>
             <li>
-              <Link href="/catalog" className="hover:text-ink">
-                Каталог
+              <Link href={lp(lang, "/catalog")} className="hover:text-ink">
+                {m.nav["/catalog"]}
               </Link>
             </li>
             <li aria-hidden>/</li>
             <li>
               <Link
-                href={`/catalog?cat=${product.category}`}
+                href={`${lp(lang, "/catalog")}?cat=${product.category}`}
                 className="hover:text-ink"
               >
-                {categoryName(product.category)}
+                {categoryName}
               </Link>
             </li>
           </ol>
@@ -99,11 +111,12 @@ export default async function ProductPage({
               alt={product.name}
               fill
               priority
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 1024px) 480px, 100vw"
               className="hero-rise object-cover"
             />
             <span className="absolute left-5 top-5 inline-flex items-center gap-1.5 rounded-full bg-[#e7f4ea] px-3.5 py-1.5 text-sm font-semibold text-[#1d6b34]">
-              <span className="size-2 rounded-full bg-[#1d9b4a]" />В наличии
+              <span className="size-2 rounded-full bg-[#1d9b4a]" />
+              {m.common.inStock}
             </span>
           </div>
 
@@ -116,16 +129,16 @@ export default async function ProductPage({
             </p>
             <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-[15px]">
               <div className="flex gap-2">
-                <dt className="text-text-soft">Артикул:</dt>
+                <dt className="text-text-soft">{m.product.article}:</dt>
                 <dd className="tabular font-medium">{product.article}</dd>
               </div>
               <div className="flex gap-2">
-                <dt className="text-text-soft">Производство:</dt>
+                <dt className="text-text-soft">{m.common.origin}:</dt>
                 <dd className="font-medium">{product.origin}</dd>
               </div>
               {product.packaging && (
                 <div className="flex gap-2">
-                  <dt className="text-text-soft">Упаковка:</dt>
+                  <dt className="text-text-soft">{m.product.packaging}:</dt>
                   <dd className="font-medium">{product.packaging}</dd>
                 </div>
               )}
@@ -133,12 +146,14 @@ export default async function ProductPage({
 
             <div className="mt-8 flex items-baseline gap-3">
               <span className="tabular font-display text-5xl font-extrabold tracking-tight">
-                {formatSum(product.pricePerKg)}
+                {formatNumber(lang, product.pricePerKg)}
               </span>
-              <span className="text-lg text-text-soft">сум / кг</span>
+              <span className="text-lg text-text-soft">
+                {m.common.perKgSpaced}
+              </span>
             </div>
             <p className="mt-1 text-sm text-text-soft">
-              Оптовая цена · минимальный заказ: {product.minLabel}
+              {m.product.wholesale(product.minLabel)}
             </p>
 
             <div className="mt-6">
@@ -160,7 +175,7 @@ export default async function ProductPage({
             {product.specs && (
               <section className="mt-12">
                 <h2 className="font-display text-2xl font-bold tracking-tight">
-                  Характеристики
+                  {m.product.specs}
                 </h2>
                 <dl className="mt-5 divide-y divide-ink/10 border-y border-ink/10">
                   {product.specs.map(([k, v]) => (
@@ -176,15 +191,15 @@ export default async function ProductPage({
             {product.blocks && (
               <section className="mt-12">
                 <h2 className="mb-5 font-display text-2xl font-bold tracking-tight">
-                  Описание
+                  {m.product.description}
                 </h2>
                 <RichBlocks blocks={product.blocks} />
                 {article && (
                   <Link
-                    href={`/news/${article.slug}`}
+                    href={lp(lang, `/news/${article.slug}`)}
                     className="mt-6 inline-block font-semibold text-ink underline decoration-amber-deep decoration-2 underline-offset-4 hover:decoration-ink"
                   >
-                    Подробнее о применении — в новостях
+                    {m.product.moreInNews}
                   </Link>
                 )}
               </section>
@@ -195,7 +210,7 @@ export default async function ProductPage({
 
       <section className="py-24">
         <h2 className="mx-auto max-w-7xl px-4 font-display text-3xl font-bold tracking-tight sm:px-8">
-          Другие товары
+          {m.product.others}
         </h2>
         <div className="mt-8 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <ul className="mx-auto flex w-max snap-x snap-mandatory gap-5 px-4 sm:px-8 xl:px-[max(2rem,calc((100vw-80rem)/2+2rem))]">
@@ -212,11 +227,11 @@ export default async function ProductPage({
       </section>
 
       <LeadSection
-        title="Нужна партия под ваше производство?"
-        lead={`Назовите объём — посчитаем цену на «${product.name}» с доставкой и условиями оплаты.`}
+        title={m.product.leadTitle}
+        lead={m.product.leadLead(product.name)}
         image="/images/stock/warehouse-forklift.webp"
-        imageLabel="Иллюстрация"
-        submitLabel="Рассчитать партию"
+        imageLabel={m.common.illustration}
+        submitLabel={m.product.leadSubmit}
       />
     </main>
   );

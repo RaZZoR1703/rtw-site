@@ -3,9 +3,11 @@ import { cn } from "@/lib/utils";
 /** Wordmark: RTW with an amber drop in place of a full stop. */
 export function Logo({
   light = false,
+  tagline,
   className,
 }: {
   light?: boolean;
+  tagline: string;
   className?: string;
 }) {
   return (
@@ -31,7 +33,7 @@ export function Logo({
       >
         Right to Win
         <br />
-        крахмал и патока оптом
+        {tagline}
       </span>
     </span>
   );

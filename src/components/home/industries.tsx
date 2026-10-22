@@ -4,11 +4,18 @@ import { useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { SectionHeading } from "@/components/section-heading";
-import { industries } from "@/lib/site";
+import { useI18n } from "@/i18n/client";
+import { industryImages } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function Industries() {
+  const { m } = useI18n();
   const [active, setActive] = useState(0);
+  const industries = m.data.industries.map((ind, i) => ({
+    ...ind,
+    image: industryImages[i],
+  }));
+  const [before, accent, after] = m.home.industriesTitle;
 
   return (
     <section className="bg-ink text-starch">
@@ -17,10 +24,12 @@ export function Industries() {
           dark
           title={
             <>
-              Сырьё для <span className="text-amber">шести</span> отраслей
+              {before}
+              <span className="text-amber">{accent}</span>
+              {after}
             </>
           }
-          lead="Среди наших постоянных клиентов — более 300 предприятий по всему Узбекистану. Знаем, что берёт каждая отрасль, и держим это на складе."
+          lead={m.home.industriesLead}
         />
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">

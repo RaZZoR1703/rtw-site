@@ -8,10 +8,18 @@ type Props = {
   lead?: React.ReactNode;
   image: string;
   crumbs: Crumb[];
+  crumbsLabel: string;
   children?: React.ReactNode;
 };
 
-export function PageHero({ title, lead, image, crumbs, children }: Props) {
+export function PageHero({
+  title,
+  lead,
+  image,
+  crumbs,
+  crumbsLabel,
+  children,
+}: Props) {
   return (
     <section className="relative isolate overflow-hidden bg-ink text-starch">
       <Image
@@ -26,7 +34,7 @@ export function PageHero({ title, lead, image, crumbs, children }: Props) {
       <div className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-ink/60 to-transparent" />
       <div className="mx-auto max-w-7xl px-4 pb-16 pt-32 sm:px-8 lg:pb-20 lg:pt-44">
         <nav
-          aria-label="Хлебные крошки"
+          aria-label={crumbsLabel}
           className="hero-rise text-sm text-starch/60"
         >
           <ol className="flex flex-wrap items-center gap-2">

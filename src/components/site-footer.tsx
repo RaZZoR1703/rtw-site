@@ -1,46 +1,47 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { categories } from "@/lib/catalog";
-import {
-  ADDRESS,
-  COMPANY,
-  EMAIL,
-  MAP_URL,
-  nav,
-  PHONES,
-  telHref,
-} from "@/lib/site";
+import { useI18n } from "@/i18n/client";
+import { lp } from "@/i18n/config";
+import { getCategories } from "@/lib/catalog";
+import { EMAIL, MAP_URL, navPaths, PHONES, telHref } from "@/lib/site";
 
 export function SiteFooter() {
+  const { lang, m } = useI18n();
+
   return (
     <footer className="bg-ink text-starch">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-10 pt-16 sm:px-8 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
         <div>
-          <Logo light />
+          <Logo light tagline={m.header.logoLine2} />
           <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-starch/65">
-            Оптовая торговля крахмалом и патокой — сырьём для пищевой,
-            кондитерской, фармацевтической и бумажной промышленности.
+            {m.footer.about}
           </p>
         </div>
-        <nav aria-label="Разделы">
-          <h2 className="text-sm font-semibold text-starch/50">Разделы</h2>
+        <nav aria-label={m.footer.sections}>
+          <h2 className="text-sm font-semibold text-starch/50">
+            {m.footer.sections}
+          </h2>
           <ul className="mt-4 grid gap-2.5">
-            {nav.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className="hover:text-amber">
-                  {item.label}
+            {navPaths.map((href) => (
+              <li key={href}>
+                <Link href={lp(lang, href)} className="hover:text-amber">
+                  {m.nav[href]}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <nav aria-label="Продукция">
-          <h2 className="text-sm font-semibold text-starch/50">Продукция</h2>
+        <nav aria-label={m.footer.products}>
+          <h2 className="text-sm font-semibold text-starch/50">
+            {m.footer.products}
+          </h2>
           <ul className="mt-4 grid gap-2.5">
-            {categories.map((c) => (
+            {getCategories(m).map((c) => (
               <li key={c.id}>
                 <Link
-                  href={`/catalog?cat=${c.id}`}
+                  href={`${lp(lang, "/catalog")}?cat=${c.id}`}
                   className="hover:text-amber"
                 >
                   {c.name}
@@ -50,7 +51,9 @@ export function SiteFooter() {
           </ul>
         </nav>
         <div>
-          <h2 className="text-sm font-semibold text-starch/50">Контакты</h2>
+          <h2 className="text-sm font-semibold text-starch/50">
+            {m.footer.contacts}
+          </h2>
           <ul className="mt-4 grid gap-2.5">
             {PHONES.map((p) => (
               <li key={p}>
@@ -74,15 +77,15 @@ export function SiteFooter() {
                 rel="noreferrer"
                 className="text-starch/65 hover:text-amber"
               >
-                {ADDRESS}
+                {m.company.address}
               </a>
             </li>
           </ul>
         </div>
       </div>
       <div className="mx-auto flex max-w-7xl flex-wrap justify-between gap-2 border-t border-white/10 px-4 py-6 text-sm text-starch/60 sm:px-8">
-        <span>© {COMPANY}, с 2015 года</span>
-        <span>Склад в Келесе, Ташкентская область</span>
+        <span>{m.footer.copyright(m.company.name)}</span>
+        <span>{m.footer.warehouse}</span>
       </div>
     </footer>
   );

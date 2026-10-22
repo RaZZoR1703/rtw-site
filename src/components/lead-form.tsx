@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useI18n } from "@/i18n/client";
 import { PHONE } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -24,9 +25,10 @@ export function LeadForm({
   details,
   compact,
   dark,
-  submitLabel = "Получить прайс",
+  submitLabel,
   onDone,
 }: Props) {
+  const { lang, m } = useI18n();
   const id = useId();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +39,7 @@ export function LeadForm({
     const form = new FormData(formEl);
     const phone = String(form.get("phone") ?? "").replace(/\D/g, "");
     if (phone.length < 9) {
-      setError("Укажите номер полностью, например 99 392 23 05");
+      setError(m.form.errorPhone);
       return;
     }
     setError(null);
@@ -52,14 +54,15 @@ export function LeadForm({
           need: form.get("need"),
           product,
           details,
+          lang,
         }),
       });
       if (!res.ok) throw new Error();
       formEl.reset();
       onDone?.();
-      toast.success("Заявка принята. Менеджер перезвонит в рабочее время.");
+      toast.success(m.form.success);
     } catch {
-      setError(`Не получилось отправить. Позвоните нам: ${PHONE}`);
+      setError(m.form.errorSend(PHONE));
     } finally {
       setPending(false);
     }
@@ -81,7 +84,7 @@ export function LeadForm({
       <div className={cn("grid gap-4", !compact && "sm:grid-cols-2")}>
         <div className="grid gap-2">
           <Label htmlFor={`${id}-name`} className={label}>
-            Имя
+            {m.form.name}
           </Label>
           <Input
             id={`${id}-name`}
@@ -92,7 +95,7 @@ export function LeadForm({
         </div>
         <div className="grid gap-2">
           <Label htmlFor={`${id}-phone`} className={label}>
-            Телефон
+            {m.form.phone}
           </Label>
           <Input
             id={`${id}-phone`}
@@ -110,13 +113,13 @@ export function LeadForm({
       {!product && (
         <div className="grid gap-2">
           <Label htmlFor={`${id}-need`} className={label}>
-            Что нужно
+            {m.form.need}
           </Label>
           <Textarea
             id={`${id}-need`}
             name="need"
             rows={compact ? 2 : 3}
-            placeholder="Например: кукурузный крахмал, 2 тонны в месяц"
+            placeholder={m.form.needPlaceholder}
             className={cn(field, "h-auto min-h-20 py-3")}
           />
         </div>
@@ -137,14 +140,14 @@ export function LeadForm({
         type="submit"
         disabled={pending}
         className={cn(
-          "h-12 rounded-full bg-amber text-base font-semibold text-ink btn btn-amber",
+          "btn btn-amber h-12 rounded-full bg-amber text-base font-semibold text-ink",
           dark && "on-dark",
         )}
       >
-        {pending ? "Отправляем…" : submitLabel}
+        {pending ? m.form.sending : (submitLabel ?? m.form.submit)}
       </Button>
       <p className={cn("text-xs", dark ? "text-starch/50" : "text-text-soft")}>
-        Нажимая кнопку, вы соглашаетесь на обработку контактных данных.
+        {m.form.consent}
       </p>
     </form>
   );

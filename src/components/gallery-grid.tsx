@@ -5,7 +5,8 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { BlurFade } from "@/components/ui/blur-fade";
-import { gallery } from "@/lib/site";
+import { useI18n } from "@/i18n/client";
+import { galleryImages } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const spans = [
@@ -20,11 +21,16 @@ const spans = [
 ];
 
 export function GalleryGrid() {
+  const { m } = useI18n();
+  const items = galleryImages.map((src, i) => ({
+    src,
+    caption: m.data.galleryCaptions[i],
+  }));
   const [index, setIndex] = useState<number | null>(null);
   const go = useCallback(
     (d: number) =>
       setIndex((i) =>
-        i === null ? i : (i + d + gallery.length) % gallery.length,
+        i === null ? i : (i + d + galleryImages.length) % galleryImages.length,
       ),
     [],
   );
@@ -42,7 +48,7 @@ export function GalleryGrid() {
   return (
     <>
       <ul className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-3 lg:auto-rows-[260px]">
-        {gallery.map((g, i) => (
+        {items.map((g, i) => (
           <li key={g.src} className={cn(spans[i])}>
             <BlurFade
               delay={(i % 4) * 0.05}
@@ -78,8 +84,8 @@ export function GalleryGrid() {
             <figure>
               <div className="relative aspect-[3/2] w-full overflow-hidden rounded-t-lg">
                 <Image
-                  src={gallery[index].src}
-                  alt={gallery[index].caption}
+                  src={items[index].src}
+                  alt={items[index].caption}
                   fill
                   sizes="94vw"
                   className="object-contain"
@@ -87,22 +93,22 @@ export function GalleryGrid() {
               </div>
               <figcaption className="flex items-center justify-between gap-4 p-5">
                 <DialogTitle className="text-base font-medium">
-                  {gallery[index].caption}
+                  {items[index].caption}
                 </DialogTitle>
                 <span className="flex shrink-0 gap-2">
                   <button
                     type="button"
                     onClick={() => go(-1)}
-                    aria-label="Предыдущее фото"
-                    className="grid size-11 place-items-center rounded-full bg-white/10 btn-icon btn-icon-light"
+                    aria-label={m.gallery.prev}
+                    className="btn-icon btn-icon-light grid size-11 place-items-center rounded-full bg-white/10"
                   >
                     <ChevronLeft className="size-5" />
                   </button>
                   <button
                     type="button"
                     onClick={() => go(1)}
-                    aria-label="Следующее фото"
-                    className="grid size-11 place-items-center rounded-full bg-white/10 btn-icon btn-icon-light"
+                    aria-label={m.gallery.next}
+                    className="btn-icon btn-icon-light grid size-11 place-items-center rounded-full bg-white/10"
                   >
                     <ChevronRight className="size-5" />
                   </button>

@@ -5,38 +5,40 @@ import Link from "next/link";
 import { ArrowRight, Trash2 } from "lucide-react";
 import { LeadForm } from "@/components/lead-form";
 import { useCart } from "@/lib/cart";
-import { formatSum } from "@/lib/catalog";
+import { useI18n } from "@/i18n/client";
+import { formatNumber, lp } from "@/i18n/config";
 
 export function CartView() {
+  const { lang, m } = useI18n();
   const { lines, total, ready, setKg, remove, clear } = useCart();
+  const n = (v: number) => formatNumber(lang, v);
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-8 lg:pb-32">
-      <nav aria-label="Хлебные крошки" className="text-sm text-text-soft">
-        <Link href="/" className="hover:text-ink">
-          Главная
+      <nav aria-label={m.common.breadcrumbs} className="text-sm text-text-soft">
+        <Link href={lp(lang)} className="hover:text-ink">
+          {m.common.home}
         </Link>{" "}
-        / <span aria-current="page">Корзина</span>
+        / <span aria-current="page">{m.cart.title}</span>
       </nav>
       <h1 className="mt-4 font-display text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-[-0.035em]">
-        Корзина
+        {m.cart.title}
       </h1>
 
       {!ready ? (
         <p className="mt-10 text-text-soft" aria-busy="true">
-          Загружаем корзину…
+          {m.cart.loading}
         </p>
       ) : lines.length === 0 ? (
         <div className="mt-10 flex flex-col items-start gap-6 rounded-[28px] bg-starch-2 p-8 sm:p-12">
           <p className="max-w-lg text-lg leading-relaxed text-text-soft">
-            В корзине пока пусто. Выберите позиции в каталоге — посчитаем партию
-            и доставку одной заявкой.
+            {m.cart.empty}
           </p>
           <Link
-            href="/catalog"
-            className="group inline-flex h-12 items-center gap-2 rounded-full bg-amber px-6 font-semibold text-ink btn btn-amber"
+            href={lp(lang, "/catalog")}
+            className="btn btn-amber group inline-flex h-12 items-center gap-2 rounded-full bg-amber px-6 font-semibold text-ink"
           >
-            Перейти в каталог
+            {m.cart.toCatalog}
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
@@ -46,13 +48,14 @@ export function CartView() {
             <ul className="divide-y divide-ink/10 border-y border-ink/10">
               {lines.map((l) => {
                 const min = l.product.minKg ?? 1;
+                const href = lp(lang, `/catalog/${l.slug}`);
                 return (
                   <li
                     key={l.slug}
                     className="grid grid-cols-[88px_1fr] gap-5 py-6 sm:grid-cols-[112px_1fr_auto] sm:items-center"
                   >
                     <Link
-                      href={`/catalog/${l.slug}`}
+                      href={href}
                       className="relative aspect-square overflow-hidden rounded-2xl bg-starch-2"
                     >
                       <Image
@@ -65,18 +68,17 @@ export function CartView() {
                     </Link>
                     <div>
                       <Link
-                        href={`/catalog/${l.slug}`}
+                        href={href}
                         className="font-semibold leading-snug hover:text-amber-deep"
                       >
                         {l.product.name}
                       </Link>
                       <p className="tabular mt-1 text-sm text-text-soft">
-                        {formatSum(l.product.pricePerKg)} сум/кг · мин.{" "}
-                        {formatSum(min)} кг
+                        {m.cart.lineMeta(n(l.product.pricePerKg), n(min))}
                       </p>
                       <div className="mt-3 flex items-center gap-3">
                         <label className="sr-only" htmlFor={`kg-${l.slug}`}>
-                          Объём, кг
+                          {m.cart.volume}
                         </label>
                         <input
                           id={`kg-${l.slug}`}
@@ -94,11 +96,13 @@ export function CartView() {
                           }}
                           className="tabular h-11 w-32 rounded-xl bg-white px-3 font-semibold ring-1 ring-ink/15"
                         />
-                        <span className="text-sm text-text-soft">кг</span>
+                        <span className="text-sm text-text-soft">
+                          {m.common.kg}
+                        </span>
                         <button
                           type="button"
                           onClick={() => remove(l.slug)}
-                          aria-label={`Убрать «${l.product.shortName}»`}
+                          aria-label={m.cart.remove(l.product.shortName)}
                           className="ml-auto grid size-10 place-items-center rounded-full text-text-soft hover:bg-ink/5 hover:text-brand-red sm:hidden"
                         >
                           <Trash2 className="size-4" />
@@ -107,7 +111,7 @@ export function CartView() {
                     </div>
                     <div className="col-span-2 flex items-center justify-between gap-4 sm:col-span-1 sm:flex-col sm:items-end">
                       <p className="tabular font-display text-xl font-bold">
-                        {formatSum(l.sum)} сум
+                        {n(l.sum)} {m.common.currency}
                       </p>
                       <button
                         type="button"
@@ -115,7 +119,7 @@ export function CartView() {
                         className="hidden items-center gap-1.5 text-sm text-text-soft hover:text-brand-red sm:inline-flex"
                       >
                         <Trash2 className="size-4" />
-                        Убрать
+                        {m.cart.removeShort}
                       </button>
                     </div>
                   </li>
@@ -127,29 +131,28 @@ export function CartView() {
               onClick={clear}
               className="mt-4 text-sm text-text-soft underline-offset-4 hover:underline"
             >
-              Очистить корзину
+              {m.cart.clear}
             </button>
           </div>
 
           <aside className="h-fit rounded-[28px] bg-ink p-7 text-starch sm:p-9 lg:sticky lg:top-28">
-            <p className="text-starch/60">Итого по оптовым ценам</p>
+            <p className="text-starch/60">{m.cart.total}</p>
             <p className="tabular mt-2 font-display text-4xl font-bold">
-              {formatSum(total)}{" "}
+              {n(total)}{" "}
               <span className="font-sans text-lg font-medium text-starch/60">
-                сум
+                {m.common.currency}
               </span>
             </p>
             <p className="mt-3 text-sm leading-relaxed text-starch/60">
-              Менеджер подтвердит наличие и пришлёт счёт. По Ташкенту доставка
-              бесплатная от 200 кг.
+              {m.cart.totalNote}
             </p>
             <div className="mt-8">
               <LeadForm
                 dark
                 compact
-                submitLabel="Отправить заявку"
+                submitLabel={m.cart.submit}
                 details={lines
-                  .map((l) => `${l.product.name}: ${l.kg} кг`)
+                  .map((l) => `${l.product.name}: ${l.kg} ${m.common.kg}`)
                   .join("; ")}
               />
             </div>

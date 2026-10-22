@@ -11,14 +11,18 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { CallbackDialog } from "@/components/callback-dialog";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Logo } from "@/components/logo";
 import { useCart } from "@/lib/cart";
-import { nav, PHONE, telHref } from "@/lib/site";
+import { useI18n } from "@/i18n/client";
+import { lp, stripLocale } from "@/i18n/config";
+import { navPaths, PHONE, telHref } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
-  const pathname = usePathname();
-  const overHero = pathname === "/";
+  const { lang, m } = useI18n();
+  const path = stripLocale(usePathname());
+  const overHero = path === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { count } = useCart();
@@ -32,7 +36,13 @@ export function SiteHeader() {
 
   const light = overHero && !scrolled;
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/" ? path === "/" : path.startsWith(href);
+  const iconBtn = cn(
+    "grid size-11 place-items-center rounded-full",
+    light
+      ? "bg-white/10 btn-icon btn-icon-light"
+      : "bg-ink/5 btn-icon btn-icon-dark",
+  );
 
   return (
     <header
@@ -51,30 +61,34 @@ export function SiteHeader() {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-1.5">
           <span className={light ? "text-starch/80" : "text-text-soft"}>
-            Склад в Ташкенте · бесплатная доставка по городу от 200 кг
+            {m.header.topLeft}
           </span>
           <span className={light ? "text-starch/80" : "text-text-soft"}>
-            ООО «RIGHT TO WIN» · опт по Узбекистану
+            {m.header.topRight}
           </span>
         </div>
       </div>
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-8 lg:h-[72px]">
-        <Link href="/" aria-label="RTW — на главную" className="shrink-0">
-          <Logo light={light} />
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-5 px-4 sm:px-8 lg:h-[72px]">
+        <Link
+          href={lp(lang)}
+          aria-label={m.common.toHomeAria}
+          className="shrink-0"
+        >
+          <Logo light={light} tagline={m.header.logoLine2} />
         </Link>
 
         <nav
-          aria-label="Основное меню"
+          aria-label={m.common.mainMenu}
           className="hidden items-center gap-1 lg:flex"
         >
-          {nav.slice(1).map((item) => (
+          {navPaths.slice(1).map((href) => (
             <Link
-              key={item.href}
-              href={item.href}
-              aria-current={isActive(item.href) ? "page" : undefined}
+              key={href}
+              href={lp(lang, href)}
+              aria-current={isActive(href) ? "page" : undefined}
               className={cn(
-                "rounded-full px-3.5 py-2 text-[15px] font-medium transition-colors duration-200",
-                isActive(item.href)
+                "whitespace-nowrap rounded-full px-3 py-2 text-[15px] font-medium transition-colors duration-200",
+                isActive(href)
                   ? light
                     ? "bg-white/15"
                     : "bg-ink text-starch"
@@ -83,15 +97,16 @@ export function SiteHeader() {
                     : "hover:bg-ink/5",
               )}
             >
-              {item.label}
+              {m.nav[href]}
             </Link>
           ))}
         </nav>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          <LanguageSwitcher light={light} className="hidden md:flex" />
           <a
             href={telHref(PHONE)}
-            className="hidden text-right leading-tight xl:block"
+            className="hidden text-right leading-tight 2xl:block"
           >
             <span className="tabular block font-semibold">{PHONE}</span>
             <span
@@ -100,30 +115,20 @@ export function SiteHeader() {
                 light ? "text-starch/70" : "text-text-soft",
               )}
             >
-              бесплатная консультация
+              {m.common.freeConsultation}
             </span>
           </a>
           <a
             href={telHref(PHONE)}
-            aria-label={`Позвонить ${PHONE}`}
-            className={cn(
-              "grid size-11 place-items-center rounded-full xl:hidden",
-              light
-                ? "bg-white/10 btn-icon btn-icon-light"
-                : "bg-ink/5 btn-icon btn-icon-dark",
-            )}
+            aria-label={m.common.callTo(PHONE)}
+            className={cn(iconBtn, "2xl:hidden")}
           >
             <Phone className="size-5" />
           </a>
           <Link
-            href="/cart"
-            aria-label={count ? `Корзина, позиций: ${count}` : "Корзина"}
-            className={cn(
-              "relative grid size-11 place-items-center rounded-full",
-              light
-                ? "bg-white/10 btn-icon btn-icon-light"
-                : "bg-ink/5 btn-icon btn-icon-dark",
-            )}
+            href={lp(lang, "/cart")}
+            aria-label={count ? m.common.cartWithCount(count) : m.common.cart}
+            className={cn(iconBtn, "relative")}
           >
             <ShoppingBag className="size-5" />
             {count > 0 && (
@@ -133,18 +138,13 @@ export function SiteHeader() {
             )}
           </Link>
           <CallbackDialog
-            triggerLabel="Оставить заявку"
-            className="hidden sm:inline-flex"
+            triggerLabel={m.common.leaveRequest}
+            className="hidden sm:inline-flex lg:hidden xl:inline-flex"
           />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
-              aria-label="Открыть меню"
-              className={cn(
-                "grid size-11 place-items-center rounded-full lg:hidden",
-                light
-                  ? "bg-white/10 btn-icon btn-icon-light"
-                  : "bg-ink/5 btn-icon btn-icon-dark",
-              )}
+              aria-label={m.common.openMenu}
+              className={cn(iconBtn, "lg:hidden")}
             >
               <Menu className="size-5" />
             </SheetTrigger>
@@ -152,21 +152,22 @@ export function SiteHeader() {
               side="right"
               className="w-[86vw] max-w-sm border-0 bg-ink p-0 text-starch"
             >
-              <SheetTitle className="sr-only">Меню</SheetTitle>
+              <SheetTitle className="sr-only">{m.common.menu}</SheetTitle>
               <div className="flex h-full flex-col px-6 pb-8 pt-16">
-                <nav aria-label="Меню" className="flex flex-col">
-                  {nav.map((item) => (
+                <LanguageSwitcher light className="mb-6 w-fit" />
+                <nav aria-label={m.common.menu} className="flex flex-col">
+                  {navPaths.map((href) => (
                     <Link
-                      key={item.href}
-                      href={item.href}
+                      key={href}
+                      href={lp(lang, href)}
                       onClick={() => setOpen(false)}
-                      aria-current={isActive(item.href) ? "page" : undefined}
+                      aria-current={isActive(href) ? "page" : undefined}
                       className={cn(
                         "border-b border-white/10 py-4 font-display text-xl font-semibold",
-                        isActive(item.href) && "text-amber",
+                        isActive(href) && "text-amber",
                       )}
                     >
-                      {item.label}
+                      {m.nav[href]}
                     </Link>
                   ))}
                 </nav>
@@ -177,10 +178,10 @@ export function SiteHeader() {
                   {PHONE}
                 </a>
                 <p className="mt-1 text-sm text-starch/60">
-                  бесплатная консультация
+                  {m.common.freeConsultation}
                 </p>
                 <CallbackDialog
-                  triggerLabel="Оставить заявку"
+                  triggerLabel={m.common.leaveRequest}
                   className="on-dark mt-6 w-full"
                 />
               </div>

@@ -1,29 +1,109 @@
-export type CategoryId = "starch" | "syrup" | "chem";
+import type { Messages } from "@/i18n/messages";
 
-export type Category = {
-  id: CategoryId;
-  name: string;
-  description: string;
-  industries: string;
-  image: string;
-};
+export type CategoryId = "starch" | "syrup" | "chem";
 
 export type Block = { title?: string; paragraphs?: string[]; list?: string[] };
 
-export type Product = {
-  id: string;
+/** Language-independent facts; every text field comes from the dictionary. */
+const baseCategories: { id: CategoryId; image: string }[] = [
+  { id: "starch", image: "/images/stock/potatoes.webp" },
+  { id: "syrup", image: "/images/stock/syrup-pour.webp" },
+  { id: "chem", image: "/images/gallery/bura-meshki-2.jpg" },
+];
+
+type ProductId = keyof Messages["data"]["products"];
+
+type BaseProduct = {
+  id: ProductId;
   slug: string;
   category: CategoryId;
-  name: string;
-  shortName: string;
-  grade?: string;
   article: string;
-  origin: string;
   pricePerKg: number;
   /** Minimum batch in kg; undefined when the unit has to be confirmed by a manager. */
   minKg?: number;
-  minLabel: string;
   image: string;
+};
+
+const baseProducts: BaseProduct[] = [
+  {
+    id: "corn",
+    slug: "kraxmal-kukuruzniy-visshiy-sort-87946",
+    category: "starch",
+    article: "P-0087946",
+    pricePerKg: 7836,
+    minKg: 100,
+    image: "/images/products/kraxmal-kukuruzniy.webp",
+  },
+  {
+    id: "potato",
+    slug: "kraxmal-kartofelniy-visshiy-sort-87948",
+    category: "starch",
+    article: "P-0087948",
+    pricePerKg: 18084,
+    minKg: 1000,
+    image: "/images/products/kraxmal-kartofelniy.webp",
+  },
+  {
+    id: "hfcs",
+    slug: "glyukozno-fruktozniy-sirop-655038",
+    category: "syrup",
+    article: "P-0655038",
+    pricePerKg: 8078,
+    image: "/images/products/glyukozno-fruktozniy-sirop.webp",
+  },
+  {
+    id: "caramel",
+    slug: "patoka-fermentativnaya-kukuruznaya-427619",
+    category: "syrup",
+    article: "P-0427619",
+    pricePerKg: 9283,
+    minKg: 280,
+    image: "/images/products/patoka-fermentativnaya.webp",
+  },
+  {
+    id: "acid",
+    slug: "patoka-kraxmalnaya-kislotnaya-kukuruznaya-427641",
+    category: "syrup",
+    article: "P-0427641",
+    pricePerKg: 9645,
+    image: "/images/products/patoka-kislotnaya.webp",
+  },
+  {
+    id: "caustic",
+    slug: "kausticheskaya-soda-granulirovannaya-457376",
+    category: "chem",
+    article: "P-0457376",
+    pricePerKg: 13141,
+    minKg: 1,
+    image: "/images/products/kausticheskaya-soda.webp",
+  },
+  {
+    id: "borax",
+    slug: "bura-desyativodnaya-meshok-25kg-397501",
+    category: "chem",
+    article: "P-0397501",
+    pricePerKg: 22906,
+    minKg: 1,
+    image: "/images/products/bura-desyativodnaya.webp",
+  },
+];
+
+export const productSlugs = baseProducts.map((p) => p.slug);
+
+export type Category = {
+  id: CategoryId;
+  image: string;
+  name: string;
+  description: string;
+  industries: string;
+};
+
+export type Product = BaseProduct & {
+  name: string;
+  shortName: string;
+  grade?: string;
+  origin: string;
+  minLabel: string;
   packaging?: string;
   freeDelivery?: string;
   lead: string;
@@ -31,257 +111,17 @@ export type Product = {
   blocks?: Block[];
 };
 
-export const categories: Category[] = [
-  {
-    id: "starch",
-    name: "Крахмал",
-    description:
-      "Картофельный и кукурузный крахмал высшего сорта для пищевых и технических производств.",
-    industries: "Кондитерская, мясная, текстильная и бумажная отрасли",
-    image: "/images/stock/potatoes.webp",
-  },
-  {
-    id: "syrup",
-    name: "Патока и сиропы",
-    description:
-      "Карамельная и кислотная патока, глюкозно-фруктозный сироп для кондитерских и напитков.",
-    industries: "Кондитерские и хлебопекарные производства, напитки",
-    image: "/images/stock/syrup-pour.webp",
-  },
-  {
-    id: "chem",
-    name: "Химия",
-    description:
-      "Бура и каустическая сода для стекольной, моющей и химической промышленности.",
-    industries: "Стекольная, моющая и химическая промышленность",
-    image: "/images/gallery/bura-meshki-2.jpg",
-  },
-];
+export function getCategories(m: Messages): Category[] {
+  return baseCategories.map((c) => ({ ...c, ...m.data.categories[c.id] }));
+}
 
-export const products: Product[] = [
-  {
-    id: "corn",
-    slug: "kraxmal-kukuruzniy-visshiy-sort-87946",
-    category: "starch",
-    name: "Крахмал кукурузный (высший сорт)",
-    shortName: "Крахмал кукурузный",
-    grade: "высший сорт",
-    article: "P-0087946",
-    origin: "Казахстан",
-    pricePerKg: 7836,
-    minKg: 100,
-    minLabel: "от 100 кг",
-    image: "/images/products/kraxmal-kukuruzniy.webp",
-    freeDelivery: "Бесплатно по Ташкенту при заказе от 200 кг",
-    lead: "Сыпучий порошок белого цвета, хорошо набухает в холодной воде и не меняется химически.",
-    blocks: [
-      {
-        paragraphs: [
-          "Кукурузный крахмал — сыпучий порошок белого цвета. Он обладает повышенной способностью к набуханию в холодной воде и не обнаруживает химических изменений.",
-          "Его изготавливают из очищенных зёрен кукурузы методом влажного помола до однородного порошка бело-молочного цвета.",
-          "Применяют в консервном и бумажном производстве, текстильной и других отраслях промышленности, в фармацевтике.",
-        ],
-      },
-    ],
-  },
-  {
-    id: "potato",
-    slug: "kraxmal-kartofelniy-visshiy-sort-87948",
-    category: "starch",
-    name: "Крахмал картофельный (высший сорт)",
-    shortName: "Крахмал картофельный",
-    grade: "высший сорт",
-    article: "P-0087948",
-    origin: "Польша (PEPEES)",
-    pricePerKg: 18084,
-    minKg: 1000,
-    minLabel: "от 1 000 кг",
-    image: "/images/products/kraxmal-kartofelniy.webp",
-    packaging: "Крепкие бумажные крафт-мешки по 25 кг",
-    freeDelivery: "Бесплатно по Ташкенту при заказе от 200 кг",
-    lead: "Картофельный крахмал польского бренда PEPEES, соответствует требованиям ГОСТ.",
-    blocks: [
-      {
-        paragraphs: [
-          "Белый порошок из свежего картофеля. Крахмал получают механическим отделением крахмальных зёрен с последующей промывкой, очисткой, сушкой и просеиванием.",
-        ],
-      },
-      {
-        title: "Применение в промышленности",
-        list: [
-          "Пищевая: загуститель для мясной продукции, соусов, супов, пудингов, киселей, кетчупов; улучшает структуру хлеба; добавка к кондитерским изделиям.",
-          "Текстильная: шлихтование пряжи, крахмаление, окрашивание, сатинирование, печатание, аппретирование.",
-          "Бумажная: проклейка бумажной массы, сатинирование, переплётные работы.",
-          "Химическая: производство клеев и декстринов.",
-          "Косметическая и фармацевтическая: присыпки, тальки, таблетирование лекарств.",
-        ],
-      },
-      {
-        paragraphs: [
-          "Производитель — польский бренд Pepees, известный картофельными продуктами, глюкозными сиропами, крупой и хлопьями.",
-        ],
-      },
-    ],
-  },
-  {
-    id: "hfcs",
-    slug: "glyukozno-fruktozniy-sirop-655038",
-    category: "syrup",
-    name: "Глюкозно-фруктозный сироп",
-    shortName: "Глюкозно-фруктозный сироп",
-    grade: "ГФС-20, ГФС-30, ГФС-40",
-    article: "P-0655038",
-    origin: "Казахстан",
-    pricePerKg: 8078,
-    minLabel: "уточняйте у менеджера",
-    image: "/images/products/glyukozno-fruktozniy-sirop.webp",
-    packaging: "Бочки по 280 кг",
-    freeDelivery: "Бесплатно по Ташкенту от 1 бочки",
-    lead: "Высший сорт марок ГФС-20, ГФС-30, ГФС-40. Есть сертификат HALAL.",
-    blocks: [
-      {
-        paragraphs: [
-          "Сироп получают изомеризацией части D-глюкозы крахмала в D-фруктозу. Он состоит в основном из фруктозы и глюкозы, поэтому по сладости и питательной ценности равноценен сахарозе.",
-          "ГФС производится из кукурузы: крахмальная фракция проходит ферментное осахаривание до состава, близкого к мёду, — 58–66% глюкозы и 42–44% фруктозы.",
-        ],
-      },
-      {
-        title: "Где применяют",
-        list: [
-          "Напитки, соки, сиропы, джемы и консервы: повышает бактериальную стабильность, сохраняет цвет и аромат.",
-          "Хлебобулочные изделия: при нагреве темнеет и даёт золотистую корку.",
-          "Молочные десерты, йогурты, мороженое.",
-          "Кондитерское производство: заменяет инвертный сахар без изменения сладости, аромата и структуры; 20–50% сахарозы в тортах, до 20% в белой глазури, полностью в желейных начинках.",
-          "Соусы и кетчупы: полностью или частично заменяет сахар.",
-          "В паре с высокомальтозной патокой (50/50) устраняет кристаллизацию сахара.",
-        ],
-      },
-    ],
-  },
-  {
-    id: "caramel",
-    slug: "patoka-fermentativnaya-kukuruznaya-427619",
-    category: "syrup",
-    name: "Патока карамельная ферментативная (кукурузная)",
-    shortName: "Патока карамельная",
-    grade: "ферментативная, кукурузная",
-    article: "P-0427619",
-    origin: "уточняйте у менеджера",
-    pricePerKg: 9283,
-    minKg: 280,
-    minLabel: "от 280 кг",
-    image: "/images/products/patoka-fermentativnaya.webp",
-    lead: "Кукурузная карамельная патока для кондитерских и хлебопекарных производств.",
-  },
-  {
-    id: "acid",
-    slug: "patoka-kraxmalnaya-kislotnaya-kukuruznaya-427641",
-    category: "syrup",
-    name: "Патока крахмальная кислотная (кукурузная)",
-    shortName: "Патока кислотная",
-    grade: "крахмальная, кукурузная",
-    article: "P-0427641",
-    origin: "уточняйте у менеджера",
-    pricePerKg: 9645,
-    minLabel: "уточняйте у менеджера",
-    image: "/images/products/patoka-kislotnaya.webp",
-    lead: "Кукурузная крахмальная патока кислотного гидролиза.",
-  },
-  {
-    id: "caustic",
-    slug: "kausticheskaya-soda-granulirovannaya-457376",
-    category: "chem",
-    name: "Каустическая сода гранулированная",
-    shortName: "Каустическая сода",
-    grade: "гранулированная, 99%",
-    article: "P-0457376",
-    origin: "Россия (Волгоград)",
-    pricePerKg: 13141,
-    minKg: 1,
-    minLabel: "от 1 кг",
-    image: "/images/products/kausticheskaya-soda.webp",
-    packaging: "Полипропиленовые водонепроницаемые мешки по 25 кг",
-    freeDelivery: "Бесплатно по Ташкенту от 500 кг",
-    lead: "Гранулированный гидроксид натрия 99%: самая распространённая щёлочь, нейтрализует жиры и органические загрязнения.",
-    blocks: [
-      {
-        paragraphs: [
-          "Едкий натр, гидроксид натрия, каустик — названия одной и той же щёлочи. Это белое твёрдое вещество без выраженного запаха, легко растворяется в воде и впитывает влагу из воздуха с выделением тепла.",
-          "Одна из самых сильных щелочей: высокая концентрация вызывает ожоги и разъедает органические вещества. Требует осторожного обращения.",
-        ],
-      },
-      {
-        title: "Свойства",
-        list: [
-          "Растворяется в воде и спиртовых растворах, не растворяется в эфирах и ацетоне.",
-          "Негорючая, с очень высокой температурой кипения (1390 °С).",
-          "Активно реагирует с алюминием, свинцом, цинком и оловом.",
-          "В расплаве разрушает стекло.",
-        ],
-      },
-    ],
-  },
-  {
-    id: "borax",
-    slug: "bura-desyativodnaya-meshok-25kg-397501",
-    category: "chem",
-    name: "Бура десятиводная, мешок 25 кг",
-    shortName: "Бура десятиводная",
-    grade: "мешок 25 кг",
-    article: "P-0397501",
-    origin: "Турция",
-    pricePerKg: 22906,
-    minKg: 1,
-    minLabel: "от 1 кг",
-    image: "/images/products/bura-desyativodnaya.webp",
-    packaging: "Мешки по 25 кг",
-    freeDelivery: "Бесплатно по Ташкенту при заказе от 200 кг",
-    lead: "Тетраборат натрия декагидрат для керамики, моющих средств, боросиликатного стекла и стекловолокна.",
-    specs: [
-      ["Массовая доля B2O3, % не менее", "36,47–38,50"],
-      ["Содержание Na2O, %", "16,24–17,14"],
-      ["Содержание SO4, не более", "0,0135"],
-      ["Содержание Cl, не более", "0,0070"],
-      ["Содержание Fe, не более", "0,0010"],
-      ["Эквивалент Na2B4O7·10H2O", "99,90–105,45"],
-    ],
-    blocks: [
-      {
-        title: "Применяется при изготовлении",
-        list: [
-          "керамических изделий",
-          "моющих средств",
-          "боросиликатного стекла",
-          "стекловолокна и изоляционной стеклоткани",
-        ],
-      },
-      {
-        paragraphs: [
-          "Бура способствует плавлению шихты, уменьшает вязкость расплава и препятствует расстеклованию. Это повышает прочность и стойкость конечного продукта к механическому, химическому и термическому воздействию, упрочняет стекловолокно и улучшает его тепло- и звукоизоляцию.",
-        ],
-      },
-    ],
-  },
-];
+export function getProducts(m: Messages): Product[] {
+  return baseProducts.map((p) => ({
+    ...p,
+    ...(m.data.products[p.id] as Omit<Product, keyof BaseProduct>),
+  }));
+}
 
 export function isCategoryId(value: unknown): value is CategoryId {
-  return categories.some((c) => c.id === value);
-}
-
-export const categoryName = (id: CategoryId) =>
-  categories.find((c) => c.id === id)?.name ?? "";
-export const productBySlug = (slug: string) =>
-  products.find((p) => p.slug === slug);
-
-export function formatSum(value: number) {
-  return new Intl.NumberFormat("ru-RU").format(Math.round(value));
-}
-
-export function pluralGoods(n: number) {
-  const mod10 = n % 10;
-  const mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return `${n} позиция`;
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20))
-    return `${n} позиции`;
-  return `${n} позиций`;
+  return baseCategories.some((c) => c.id === value);
 }

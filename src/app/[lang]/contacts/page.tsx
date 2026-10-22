@@ -2,21 +2,40 @@ import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { LeadForm } from "@/components/lead-form";
-import { ADDRESS, EMAIL, MAP_URL, PHONES, telHref } from "@/lib/site";
+import { lp } from "@/i18n/config";
+import { getMessages } from "@/i18n/messages";
+import { alternates, resolveLang } from "@/i18n/seo";
+import { EMAIL, MAP_EMBED, MAP_URL, PHONES, telHref } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Контакты",
-  description: `Телефоны, e-mail и адрес склада RTW: ${ADDRESS}.`,
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/contacts">): Promise<Metadata> {
+  const lang = await resolveLang(params);
+  const m = getMessages(lang);
+  return {
+    title: m.contacts.metaTitle,
+    description: m.contacts.metaDescription(m.company.address),
+    alternates: alternates(lang, "/contacts"),
+  };
+}
 
-export default function ContactsPage() {
+export default async function ContactsPage({
+  params,
+}: PageProps<"/[lang]/contacts">) {
+  const lang = await resolveLang(params);
+  const m = getMessages(lang);
+
   return (
     <main>
       <PageHero
         image="/images/gallery/bochki-s-patokoy.jpg"
-        crumbs={[{ href: "/", label: "Главная" }, { label: "Контакты" }]}
-        title="Контакты"
-        lead="Позвоните или оставьте заявку — подберём продукцию, рассчитаем партию и доставку."
+        crumbsLabel={m.common.breadcrumbs}
+        crumbs={[
+          { href: lp(lang), label: m.common.home },
+          { label: m.contacts.title },
+        ]}
+        title={m.contacts.title}
+        lead={m.contacts.lead}
       />
 
       <section className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-8 lg:grid-cols-[1fr_1.1fr] lg:py-24">
@@ -24,7 +43,7 @@ export default function ContactsPage() {
           <div className="rounded-[24px] bg-white p-7 ring-1 ring-ink/8">
             <Phone className="size-6 text-amber-deep" />
             <h2 className="mt-4 text-sm font-medium text-text-soft">
-              Телефоны
+              {m.contacts.phones}
             </h2>
             <ul className="mt-2 grid gap-1">
               {PHONES.map((p) => (
@@ -43,7 +62,7 @@ export default function ContactsPage() {
             <div className="rounded-[24px] bg-white p-7 ring-1 ring-ink/8">
               <Mail className="size-6 text-amber-deep" />
               <h2 className="mt-4 text-sm font-medium text-text-soft">
-                E-mail
+                {m.contacts.email}
               </h2>
               <a
                 href={`mailto:${EMAIL}`}
@@ -55,7 +74,7 @@ export default function ContactsPage() {
             <div className="rounded-[24px] bg-white p-7 ring-1 ring-ink/8">
               <MapPin className="size-6 text-amber-deep" />
               <h2 className="mt-4 text-sm font-medium text-text-soft">
-                Склад и офис
+                {m.contacts.address}
               </h2>
               <a
                 href={MAP_URL}
@@ -63,14 +82,14 @@ export default function ContactsPage() {
                 rel="noreferrer"
                 className="mt-2 block font-semibold leading-snug hover:text-amber-deep"
               >
-                {ADDRESS}
+                {m.company.address}
               </a>
             </div>
           </div>
           <div className="relative aspect-[16/10] overflow-hidden rounded-[24px] bg-starch-2 ring-1 ring-ink/8">
             <iframe
-              title="Склад RTW на карте"
-              src={`https://yandex.uz/map-widget/v1/?text=${encodeURIComponent(ADDRESS)}&z=14`}
+              title={m.contacts.mapTitle}
+              src={MAP_EMBED}
               className="absolute inset-0 size-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -80,13 +99,11 @@ export default function ContactsPage() {
 
         <div className="h-fit rounded-[28px] bg-ink p-7 text-starch sm:p-10">
           <h2 className="font-display text-3xl font-bold tracking-tight">
-            Оставить заявку
+            {m.contacts.formTitle}
           </h2>
-          <p className="mt-3 text-starch/65">
-            Отправьте ваши контакты и получите актуальные цены.
-          </p>
+          <p className="mt-3 text-starch/65">{m.contacts.formLead}</p>
           <div className="mt-8">
-            <LeadForm dark submitLabel="Отправить заявку" />
+            <LeadForm dark submitLabel={m.contacts.formSubmit} />
           </div>
         </div>
       </section>

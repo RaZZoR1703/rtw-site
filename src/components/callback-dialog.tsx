@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { LeadForm } from "@/components/lead-form";
+import { useI18n } from "@/i18n/client";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -32,6 +33,7 @@ export function CallbackDialog({
   variant = "amber",
   className,
 }: Props) {
+  const { m } = useI18n();
   const [open, setOpen] = useState(false);
 
   return (
@@ -50,12 +52,10 @@ export function CallbackDialog({
       <DialogContent className="overflow-hidden rounded-3xl border-0 bg-starch p-0 sm:max-w-md">
         <DialogHeader className="bg-ink p-7 text-left text-starch">
           <DialogTitle className="font-display text-2xl font-bold leading-tight">
-            Перезвоним
+            {m.form.dialogTitle}
           </DialogTitle>
           <DialogDescription className="text-starch/70">
-            {product
-              ? `По позиции «${product}»: уточним цену, партию и сроки.`
-              : "Подберём продукцию под вашу задачу и пришлём актуальные цены."}
+            {product ? m.form.dialogProduct(product) : m.form.dialogGeneric}
           </DialogDescription>
         </DialogHeader>
         <div className="p-7">

@@ -13,37 +13,48 @@ import { PageHero } from "@/components/page-hero";
 import { SectionHeading } from "@/components/section-heading";
 import { LeadSection } from "@/components/lead-section";
 import { BlurFade } from "@/components/ui/blur-fade";
-import { deliveryOptions, orderSteps, payments } from "@/lib/site";
-
-export const metadata: Metadata = {
-  title: "Оплата и доставка",
-  description:
-    "Перечислением, через UzCard или наличными. Бесплатная доставка по Ташкенту от 200 кг, поставки в регионы, самовывоз из Келеса.",
-};
+import { lp } from "@/i18n/config";
+import { getMessages } from "@/i18n/messages";
+import { alternates, resolveLang } from "@/i18n/seo";
 
 const payIcons = [Landmark, CreditCard, Banknote];
 const deliveryIcons = [Truck, CalendarClock, MapPinned, PackageCheck];
 
-export default function DeliveryPage() {
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/delivery">): Promise<Metadata> {
+  const lang = await resolveLang(params);
+  const m = getMessages(lang);
+  return {
+    title: m.delivery.metaTitle,
+    description: m.delivery.metaDescription,
+    alternates: alternates(lang, "/delivery"),
+  };
+}
+
+export default async function DeliveryPage({
+  params,
+}: PageProps<"/[lang]/delivery">) {
+  const lang = await resolveLang(params);
+  const m = getMessages(lang);
+
   return (
     <main>
       <PageHero
         image="/images/stock/truck-road.webp"
+        crumbsLabel={m.common.breadcrumbs}
         crumbs={[
-          { href: "/", label: "Главная" },
-          { label: "Оплата и доставка" },
+          { href: lp(lang), label: m.common.home },
+          { label: m.delivery.title },
         ]}
-        title="Оплата и доставка"
-        lead="Работаем с юридическими лицами и предпринимателями по всему Узбекистану. Товар в наличии на складе в Ташкенте."
+        title={m.delivery.title}
+        lead={m.delivery.lead}
       />
 
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-8 lg:py-32">
-        <SectionHeading
-          title="Способы оплаты"
-          lead="Выберите удобный способ — для юрлиц выставим счёт на перечисление."
-        />
+        <SectionHeading title={m.delivery.payTitle} lead={m.delivery.payLead} />
         <ul className="mt-12 grid gap-5 md:grid-cols-3">
-          {payments.map((p, i) => {
+          {m.data.payments.map((p, i) => {
             const Icon = payIcons[i];
             return (
               <BlurFade
@@ -73,9 +84,9 @@ export default function DeliveryPage() {
       <section className="bg-ink text-starch">
         <div className="mx-auto grid max-w-7xl gap-14 px-4 py-24 sm:px-8 lg:grid-cols-2 lg:py-32">
           <div>
-            <SectionHeading dark title="Привезём сырьё туда, где оно нужно" />
+            <SectionHeading dark title={m.delivery.deliveryTitle} />
             <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-              {deliveryOptions.map((d, i) => {
+              {m.data.deliveryOptions.map((d, i) => {
                 const Icon = deliveryIcons[i];
                 return (
                   <li
@@ -95,26 +106,26 @@ export default function DeliveryPage() {
           <div className="relative min-h-80 overflow-hidden rounded-[28px]">
             <Image
               src="/images/stock/warehouse-forklift.webp"
-              alt="Погрузчик между стеллажами с паллетами на складе"
+              alt={m.delivery.forkliftAlt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />
             <span className="absolute bottom-4 left-4 rounded-full bg-ink px-3 py-1 text-xs text-starch/80">
-              Иллюстрация
+              {m.common.illustration}
             </span>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-24 sm:px-8 lg:py-32">
-        <SectionHeading title="Четыре шага до поставки" />
+        <SectionHeading title={m.delivery.stepsTitle} />
         <ol className="relative mt-14 grid gap-8 md:grid-cols-4">
           <span
             aria-hidden
             className="absolute left-0 right-0 top-6 hidden h-px bg-ink/15 md:block"
           />
-          {orderSteps.map((s, i) => (
+          {m.data.orderSteps.map((s, i) => (
             <BlurFade
               key={s.name}
               delay={i * 0.1}
@@ -137,11 +148,11 @@ export default function DeliveryPage() {
       </section>
 
       <LeadSection
-        title="Посчитаем доставку вашей партии"
-        lead="Назовите объём и адрес — ответим, когда привезём и сколько это будет стоить."
+        title={m.delivery.leadTitle}
+        lead={m.delivery.leadLead}
         image="/images/stock/warehouse-bags.webp"
-        imageLabel="Иллюстрация"
-        submitLabel="Рассчитать"
+        imageLabel={m.common.illustration}
+        submitLabel={m.delivery.leadSubmit}
       />
     </main>
   );

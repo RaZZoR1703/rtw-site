@@ -4,46 +4,73 @@ import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
 import { ProductCard } from "@/components/product-card";
 import { LeadSection } from "@/components/lead-section";
-import { categories, isCategoryId, pluralGoods, products } from "@/lib/catalog";
+import { lp, type Locale } from "@/i18n/config";
+import { getMessages } from "@/i18n/messages";
+import { alternates, resolveLang } from "@/i18n/seo";
+import {
+  getCategories,
+  getProducts,
+  isCategoryId,
+  type CategoryId,
+} from "@/lib/catalog";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = {
-  title: "Каталог продукции",
-  description:
-    "Крахмал, патока и сиропы, техническая химия — оптовые цены за килограмм, товар в наличии на складе в Ташкенте.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[lang]/catalog">): Promise<Metadata> {
+  const lang = await resolveLang(params);
+  const m = getMessages(lang);
+  return {
+    title: m.catalog.metaTitle,
+    description: m.catalog.metaDescription,
+    alternates: alternates(lang, "/catalog"),
+  };
+}
 
-export default function CatalogPage({ searchParams }: PageProps<"/catalog">) {
+export default async function CatalogPage({
+  params,
+  searchParams,
+}: PageProps<"/[lang]/catalog">) {
+  const lang = await resolveLang(params);
+  const m = getMessages(lang);
   return (
     <main>
-      <Suspense fallback={<CatalogView />}>
-        <CatalogFromParams searchParams={searchParams} />
+      <Suspense fallback={<CatalogView lang={lang} />}>
+        <CatalogFromParams lang={lang} searchParams={searchParams} />
       </Suspense>
       <LeadSection
-        title="Не нашли нужную позицию или объём?"
-        lead="Скажите, что нужно производству, — подберём позицию из наличия или привезём партию под заказ."
+        title={m.catalog.leadTitle}
+        lead={m.catalog.leadLead}
         image="/images/stock/warehouse-forklift.webp"
-        imageLabel="Иллюстрация"
-        submitLabel="Перезвоните мне"
+        imageLabel={m.common.illustration}
+        submitLabel={m.catalog.leadSubmit}
       />
     </main>
   );
 }
 
 async function CatalogFromParams({
+  lang,
   searchParams,
-}: Pick<PageProps<"/catalog">, "searchParams">) {
+}: {
+  lang: Locale;
+  searchParams: PageProps<"/[lang]/catalog">["searchParams"];
+}) {
   const { cat } = await searchParams;
-  return <CatalogView cat={isCategoryId(cat) ? cat : undefined} />;
+  return <CatalogView lang={lang} cat={isCategoryId(cat) ? cat : undefined} />;
 }
 
-function CatalogView({ cat }: { cat?: string }) {
+function CatalogView({ lang, cat }: { lang: Locale; cat?: CategoryId }) {
+  const m = getMessages(lang);
+  const categories = getCategories(m);
+  const products = getProducts(m);
   const active = categories.find((c) => c.id === cat);
   const list = active
     ? products.filter((p) => p.category === active.id)
     : products;
+  const catalogHref = lp(lang, "/catalog");
   const filters = [
-    { id: undefined, name: "Все товары", count: products.length },
+    { id: undefined, name: m.catalog.allGoods, count: products.length },
     ...categories.map((c) => ({
       id: c.id,
       name: c.name,
@@ -55,24 +82,24 @@ function CatalogView({ cat }: { cat?: string }) {
     <>
       <PageHero
         image={active?.image ?? "/images/stock/corn-cobs.webp"}
+        crumbsLabel={m.common.breadcrumbs}
         crumbs={[
-          { href: "/", label: "Главная" },
+          { href: lp(lang), label: m.common.home },
           ...(active
-            ? [{ href: "/catalog", label: "Каталог" }, { label: active.name }]
-            : [{ label: "Каталог" }]),
+            ? [
+                { href: catalogHref, label: m.nav["/catalog"] },
+                { label: active.name },
+              ]
+            : [{ label: m.nav["/catalog"] }]),
         ]}
-        title={active ? active.name : "Каталог продукции"}
-        lead={
-          active
-            ? active.description
-            : "Крахмал, патока и сиропы, техническая химия — оптовые цены за килограмм, товар в наличии на складе в Ташкенте."
-        }
+        title={active ? active.name : m.catalog.title}
+        lead={active ? active.description : m.catalog.lead}
       />
 
       <section className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-8 lg:py-20">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <nav
-            aria-label="Категории"
+            aria-label={m.catalog.categories}
             className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
           >
             <ul className="flex w-max gap-2 rounded-full bg-starch-2 p-1.5">
@@ -81,11 +108,11 @@ function CatalogView({ cat }: { cat?: string }) {
                 return (
                   <li key={f.name}>
                     <Link
-                      href={f.id ? `/catalog?cat=${f.id}` : "/catalog"}
+                      href={f.id ? `${catalogHref}?cat=${f.id}` : catalogHref}
                       scroll={false}
                       aria-current={selected ? "page" : undefined}
                       className={cn(
-                        "flex h-11 items-center gap-2 rounded-full px-5 font-semibold transition-colors duration-200",
+                        "flex h-11 items-center gap-2 whitespace-nowrap rounded-full px-5 font-semibold transition-colors duration-200",
                         selected ? "bg-ink text-starch" : "hover:bg-white",
                       )}
                     >
@@ -105,7 +132,7 @@ function CatalogView({ cat }: { cat?: string }) {
             </ul>
           </nav>
           <p className="text-[15px] text-text-soft">
-            {pluralGoods(list.length)} · цены за 1 кг
+            {m.common.goods(list.length)} · {m.catalog.pricesPerKg}
             {active && <> · {active.industries}</>}
           </p>
         </div>

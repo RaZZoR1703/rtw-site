@@ -6,9 +6,12 @@ import { Minus, Plus, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import { CallbackDialog } from "@/components/callback-dialog";
 import { useCart } from "@/lib/cart";
-import { formatSum, type Product } from "@/lib/catalog";
+import { useI18n } from "@/i18n/client";
+import { formatNumber, lp } from "@/i18n/config";
+import type { Product } from "@/lib/catalog";
 
 export function BatchCalculator({ product }: { product: Product }) {
+  const { lang, m } = useI18n();
   const { add } = useCart();
   const min = product.minKg;
   const step = min && min >= 100 ? 100 : 25;
@@ -19,11 +22,10 @@ export function BatchCalculator({ product }: { product: Product }) {
     return (
       <div className="rounded-3xl bg-starch-2 p-6">
         <p className="text-[15px] leading-relaxed text-text-soft">
-          Минимальную партию и фасовку по этой позиции уточнит менеджер — он же
-          посчитает сумму с доставкой.
+          {m.product.batchAsk}
         </p>
         <CallbackDialog
-          triggerLabel="Рассчитать партию"
+          triggerLabel={m.product.batchAskButton}
           product={product.name}
           className="mt-5 h-12 w-full"
         />
@@ -40,15 +42,15 @@ export function BatchCalculator({ product }: { product: Product }) {
   return (
     <div className="rounded-3xl bg-white p-6 ring-1 ring-ink/10">
       <label htmlFor="kg" className="text-sm font-medium text-text-soft">
-        Объём партии, кг
+        {m.product.batchVolume}
       </label>
       <div className="mt-2 flex items-center gap-2">
         <button
           type="button"
           onClick={() => commit(kg - step)}
           disabled={kg <= min}
-          aria-label={`Меньше на ${step} кг`}
-          className="grid size-12 place-items-center rounded-full bg-starch-2 btn-icon btn-icon-dark disabled:opacity-40"
+          aria-label={m.product.batchLess(step)}
+          className="btn-icon btn-icon-dark grid size-12 place-items-center rounded-full bg-starch-2 disabled:opacity-40"
         >
           <Minus className="size-4" />
         </button>
@@ -64,24 +66,24 @@ export function BatchCalculator({ product }: { product: Product }) {
         <button
           type="button"
           onClick={() => commit(kg + step)}
-          aria-label={`Больше на ${step} кг`}
-          className="grid size-12 place-items-center rounded-full bg-starch-2 btn-icon btn-icon-dark"
+          aria-label={m.product.batchMore(step)}
+          className="btn-icon btn-icon-dark grid size-12 place-items-center rounded-full bg-starch-2"
         >
           <Plus className="size-4" />
         </button>
       </div>
       <p className="mt-3 text-sm text-text-soft">
-        Минимальная партия — {formatSum(min)} кг; меньше положить нельзя.
+        {m.product.batchMin(formatNumber(lang, min))}
       </p>
       <div className="mt-5 flex items-baseline justify-between border-t border-ink/10 pt-5">
-        <span className="text-text-soft">Сумма</span>
+        <span className="text-text-soft">{m.product.batchSum}</span>
         <span
           className="tabular font-display text-3xl font-bold"
           aria-live="polite"
         >
-          {formatSum(kg * product.pricePerKg)}{" "}
+          {formatNumber(lang, kg * product.pricePerKg)}{" "}
           <span className="font-sans text-base font-medium text-text-soft">
-            сум
+            {m.common.currency}
           </span>
         </span>
       </div>
@@ -91,31 +93,32 @@ export function BatchCalculator({ product }: { product: Product }) {
           onClick={() => {
             add(product.slug, kg);
             toast.success(
-              `${product.shortName}: ${formatSum(kg)} кг в корзине`,
+              m.common.addedToCart(product.shortName, formatNumber(lang, kg)),
               {
                 action: {
-                  label: "Корзина",
-                  onClick: () => (window.location.href = "/cart"),
+                  label: m.common.cart,
+                  onClick: () => (window.location.href = lp(lang, "/cart")),
                 },
               },
             );
           }}
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-amber font-semibold text-ink btn btn-amber"
+          className="btn btn-amber inline-flex h-12 items-center justify-center gap-2 rounded-full bg-amber font-semibold text-ink"
         >
-          <ShoppingBag className="size-4" />В корзину
+          <ShoppingBag className="size-4" />
+          {m.common.toCart}
         </button>
         <CallbackDialog
-          triggerLabel="Получить прайс"
+          triggerLabel={m.product.getPrice}
           product={product.name}
           variant="ink"
           className="h-12 w-full"
         />
       </div>
       <Link
-        href="/cart"
+        href={lp(lang, "/cart")}
         className="mt-4 block text-center text-sm font-medium text-text-soft underline-offset-4 hover:underline"
       >
-        Перейти в корзину
+        {m.common.goToCart}
       </Link>
     </div>
   );

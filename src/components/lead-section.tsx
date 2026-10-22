@@ -1,25 +1,30 @@
+"use client";
+
 import Image from "next/image";
 import { LeadForm } from "@/components/lead-form";
-import { ADDRESS, EMAIL, MAP_URL, PHONES, telHref } from "@/lib/site";
+import { useI18n } from "@/i18n/client";
+import { EMAIL, MAP_URL, PHONES, telHref } from "@/lib/site";
 
 type Props = {
   title?: string;
   lead?: string;
   image?: string;
   submitLabel?: string;
-  /** Visible note on the photo, e.g. "Иллюстрация" for stock imagery. */
+  /** Visible note on the photo, e.g. "Illustration" for stock imagery. */
   imageLabel?: string;
   id?: string;
 };
 
 export function LeadSection({
-  title = "Рассчитаем партию с доставкой",
-  lead = "Оставьте телефон — менеджер перезвонит, подберёт продукцию под вашу задачу и пришлёт актуальные цены.",
+  title,
+  lead,
   image = "/images/gallery/bura-meshki.jpg",
   submitLabel,
   imageLabel,
   id = "lead",
 }: Props) {
+  const { m } = useI18n();
+
   return (
     <section id={id} className="px-4 pb-24 sm:px-8 lg:pb-32">
       <div className="relative isolate mx-auto grid max-w-7xl overflow-hidden rounded-[32px] bg-ink text-starch lg:grid-cols-2">
@@ -40,10 +45,10 @@ export function LeadSection({
         </div>
         <div className="relative p-7 sm:p-12">
           <h2 className="text-balance font-display text-[clamp(1.85rem,3.6vw,3rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-            {title}
+            {title ?? m.home.leadTitle}
           </h2>
           <p className="mt-4 max-w-md text-[17px] leading-relaxed text-starch/70">
-            {lead}
+            {lead ?? m.home.leadLead}
           </p>
           <div className="mt-8">
             <LeadForm dark submitLabel={submitLabel} />
@@ -72,7 +77,7 @@ export function LeadSection({
               rel="noreferrer"
               className="text-starch/70 hover:text-amber"
             >
-              {ADDRESS}
+              {m.company.address}
             </a>
           </div>
         </div>

@@ -8,7 +8,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { products, type Product } from "@/lib/catalog";
+import { getProducts, productSlugs, type Product } from "@/lib/catalog";
+import { useI18n } from "@/i18n/client";
 
 export type CartLine = { slug: string; kg: number };
 type CartLineFull = CartLine & { product: Product; sum: number };
@@ -31,15 +32,15 @@ function read(): CartLine[] {
   try {
     const raw = localStorage.getItem(KEY);
     const parsed = raw ? (JSON.parse(raw) as CartLine[]) : [];
-    return parsed.filter(
-      (l) => products.some((p) => p.slug === l.slug) && l.kg > 0,
-    );
+    return parsed.filter((l) => productSlugs.includes(l.slug) && l.kg > 0);
   } catch {
     return [];
   }
 }
 
+/** Stores only slugs and kilograms, so switching language keeps the cart and re-labels it. */
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const { m } = useI18n();
   const [raw, setRaw] = useState<CartLine[]>([]);
   const [ready, setReady] = useState(false);
 
@@ -75,6 +76,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clear = useCallback(() => setRaw([]), []);
 
   const value = useMemo<CartContextValue>(() => {
+    const products = getProducts(m);
     const lines = raw.flatMap((l) => {
       const product = products.find((p) => p.slug === l.slug);
       return product ? [{ ...l, product, sum: product.pricePerKg * l.kg }] : [];
@@ -89,7 +91,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       remove,
       clear,
     };
-  }, [raw, ready, add, setKg, remove, clear]);
+  }, [raw, ready, m, add, setKg, remove, clear]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
