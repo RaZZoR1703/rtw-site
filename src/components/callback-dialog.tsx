@@ -21,9 +21,9 @@ type Props = {
 };
 
 export const buttonVariants = {
-  amber: "bg-amber text-ink hover:bg-[#ffb52e]",
-  ink: "bg-ink text-starch hover:bg-ink-2",
-  ghost: "bg-white/10 text-starch ring-1 ring-white/25 hover:bg-white/20",
+  amber: "bg-amber text-ink btn btn-amber",
+  ink: "bg-ink text-starch btn btn-ink",
+  ghost: "bg-white/10 text-starch ring-1 ring-white/25 btn btn-ghost",
 };
 
 export function CallbackDialog({
@@ -39,7 +39,7 @@ export function CallbackDialog({
       <DialogTrigger asChild>
         <Button
           className={cn(
-            "h-11 rounded-full px-5 text-[15px] font-semibold transition-colors duration-200",
+            "h-11 rounded-full px-5 text-[15px] font-semibold",
             buttonVariants[variant],
             className,
           )}

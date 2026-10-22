@@ -14,7 +14,7 @@ export function StockRail() {
         >
           <Link
             href="/catalog"
-            className="group inline-flex h-12 w-fit shrink-0 items-center gap-2 rounded-full bg-ink px-6 font-semibold text-starch hover:bg-ink-2"
+            className="group inline-flex h-12 w-fit shrink-0 items-center gap-2 rounded-full bg-ink px-6 font-semibold text-starch btn btn-ink"
           >
             Весь каталог
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />

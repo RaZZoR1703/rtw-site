@@ -252,3 +252,80 @@
     animation: none;
   }
 }
+
+/* Buttons — hover pours a fill up from the bottom (syrup into a glass), press sinks the button.
+   CSS transitions only: they retarget mid-way, so rapid hover in/out never restarts. */
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform 140ms var(--ease-out),
+    color 200ms ease;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--btn-fill);
+  transform: translateY(101%);
+  transition: transform 240ms var(--ease-out);
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+.btn-amber { --btn-fill: var(--ink); }
+.btn-ink { --btn-fill: var(--amber); }
+.btn-ghost { --btn-fill: var(--starch); }
+.btn-amber.on-dark { --btn-fill: var(--starch); }
+
+.btn-icon {
+  transition:
+    transform 140ms var(--ease-out),
+    background-color 200ms ease,
+    color 200ms ease;
+}
+.btn-icon:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover::before { transform: translateY(0); }
+  .btn-amber:hover { color: var(--amber); }
+  .btn-amber.on-dark:hover { color: var(--ink); }
+  .btn-ink:hover,
+  .btn-ghost:hover { color: var(--ink); }
+  .btn-icon:hover:not(:disabled) { transform: scale(1.06); }
+  .btn-icon.btn-icon-light:hover { background-color: rgb(255 255 255 / 0.22); }
+  .btn-icon.btn-icon-dark:hover { background-color: rgb(18 13 8 / 0.12); }
+  .btn-icon.btn-icon-fill:hover { background-color: var(--ink); color: var(--amber); }
+}
+
+/* Keyboard focus shows the same filled state as hover. */
+.btn:focus-visible::before { transform: translateY(0); }
+.btn-amber:focus-visible { color: var(--amber); }
+.btn-amber.on-dark:focus-visible { color: var(--ink); }
+.btn-ink:focus-visible,
+.btn-ghost:focus-visible { color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn-icon {
+    transition: color 150ms ease, background-color 150ms ease;
+  }
+  .btn::before {
+    transform: none;
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+  .btn:hover::before,
+  .btn:focus-visible::before { opacity: 1; }
+  .btn:active:not(:disabled),
+  .btn-icon:active:not(:disabled),
+  .btn-icon:hover:not(:disabled) { transform: none; }
+}

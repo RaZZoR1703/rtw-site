@@ -136,7 +136,10 @@ export function LeadForm({
       <Button
         type="submit"
         disabled={pending}
-        className="h-12 rounded-full bg-amber text-base font-semibold text-ink hover:bg-[#ffb52e]"
+        className={cn(
+          "h-12 rounded-full bg-amber text-base font-semibold text-ink btn btn-amber",
+          dark && "on-dark",
+        )}
       >
         {pending ? "Отправляем…" : submitLabel}
       </Button>

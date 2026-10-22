@@ -23,14 +23,14 @@ export default function NotFound() {
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
           href="/catalog"
-          className="group inline-flex h-12 items-center gap-2 rounded-full bg-amber px-6 font-semibold text-ink hover:bg-[#ffb52e]"
+          className="group inline-flex h-12 items-center gap-2 rounded-full bg-amber px-6 font-semibold text-ink btn btn-amber"
         >
           Каталог и цены
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
         <Link
           href="/"
-          className="inline-flex h-12 items-center rounded-full bg-ink px-6 font-semibold text-starch hover:bg-ink-2"
+          className="inline-flex h-12 items-center rounded-full bg-ink px-6 font-semibold text-starch btn btn-ink"
         >
           На главную
         </Link>

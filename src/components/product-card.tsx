@@ -94,7 +94,7 @@ export function ProductCard({
                 "relative z-10 grid size-12 shrink-0 place-items-center rounded-full transition-colors duration-200",
                 justAdded || inCart
                   ? "bg-ink text-amber"
-                  : "bg-amber text-ink hover:bg-[#ffb52e]",
+                  : "bg-amber text-ink btn-icon btn-icon-fill",
               )}
             >
               {justAdded ? (
@@ -106,7 +106,7 @@ export function ProductCard({
           ) : (
             <Link
               href={`/catalog/${product.slug}`}
-              className="relative z-10 shrink-0 rounded-full bg-ink px-4 py-3 text-sm font-semibold text-starch hover:bg-ink-2"
+              className="relative z-10 shrink-0 rounded-full bg-ink px-4 py-3 text-sm font-semibold text-starch btn btn-ink"
             >
               Уточнить
             </Link>

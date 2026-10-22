@@ -34,7 +34,7 @@ export function CartView() {
           </p>
           <Link
             href="/catalog"
-            className="group inline-flex h-12 items-center gap-2 rounded-full bg-amber px-6 font-semibold text-ink hover:bg-[#ffb52e]"
+            className="group inline-flex h-12 items-center gap-2 rounded-full bg-amber px-6 font-semibold text-ink btn btn-amber"
           >
             Перейти в каталог
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />

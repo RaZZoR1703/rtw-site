@@ -48,7 +48,7 @@ export function BatchCalculator({ product }: { product: Product }) {
           onClick={() => commit(kg - step)}
           disabled={kg <= min}
           aria-label={`Меньше на ${step} кг`}
-          className="grid size-12 place-items-center rounded-full bg-starch-2 hover:bg-ink/10 disabled:opacity-40"
+          className="grid size-12 place-items-center rounded-full bg-starch-2 btn-icon btn-icon-dark disabled:opacity-40"
         >
           <Minus className="size-4" />
         </button>
@@ -65,7 +65,7 @@ export function BatchCalculator({ product }: { product: Product }) {
           type="button"
           onClick={() => commit(kg + step)}
           aria-label={`Больше на ${step} кг`}
-          className="grid size-12 place-items-center rounded-full bg-starch-2 hover:bg-ink/10"
+          className="grid size-12 place-items-center rounded-full bg-starch-2 btn-icon btn-icon-dark"
         >
           <Plus className="size-4" />
         </button>
@@ -100,7 +100,7 @@ export function BatchCalculator({ product }: { product: Product }) {
               },
             );
           }}
-          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-amber font-semibold text-ink hover:bg-[#ffb52e]"
+          className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-amber font-semibold text-ink btn btn-amber"
         >
           <ShoppingBag className="size-4" />В корзину
         </button>

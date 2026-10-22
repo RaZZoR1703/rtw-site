@@ -35,14 +35,14 @@ export function Hero() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/catalog"
-                className="group inline-flex h-14 items-center gap-3 rounded-full bg-amber px-7 text-[17px] font-semibold text-ink transition-colors hover:bg-[#ffb52e]"
+                className="group inline-flex h-14 items-center gap-3 rounded-full bg-amber px-7 text-[17px] font-semibold text-ink btn btn-amber"
               >
                 Каталог и цены
                 <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <a
                 href={telHref(PHONE)}
-                className="tabular inline-flex h-14 items-center gap-3 rounded-full bg-ink px-7 text-[17px] font-semibold ring-1 ring-white/20 transition-colors hover:bg-ink-2"
+                className="tabular inline-flex h-14 items-center gap-3 rounded-full bg-ink px-7 text-[17px] font-semibold ring-1 ring-white/20 btn btn-ink"
               >
                 <Phone className="size-5" />
                 {PHONE}

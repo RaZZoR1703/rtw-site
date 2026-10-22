@@ -109,8 +109,8 @@ export function SiteHeader() {
             className={cn(
               "grid size-11 place-items-center rounded-full xl:hidden",
               light
-                ? "bg-white/10 hover:bg-white/20"
-                : "bg-ink/5 hover:bg-ink/10",
+                ? "bg-white/10 btn-icon btn-icon-light"
+                : "bg-ink/5 btn-icon btn-icon-dark",
             )}
           >
             <Phone className="size-5" />
@@ -121,8 +121,8 @@ export function SiteHeader() {
             className={cn(
               "relative grid size-11 place-items-center rounded-full",
               light
-                ? "bg-white/10 hover:bg-white/20"
-                : "bg-ink/5 hover:bg-ink/10",
+                ? "bg-white/10 btn-icon btn-icon-light"
+                : "bg-ink/5 btn-icon btn-icon-dark",
             )}
           >
             <ShoppingBag className="size-5" />
@@ -142,8 +142,8 @@ export function SiteHeader() {
               className={cn(
                 "grid size-11 place-items-center rounded-full lg:hidden",
                 light
-                  ? "bg-white/10 hover:bg-white/20"
-                  : "bg-ink/5 hover:bg-ink/10",
+                  ? "bg-white/10 btn-icon btn-icon-light"
+                  : "bg-ink/5 btn-icon btn-icon-dark",
               )}
             >
               <Menu className="size-5" />
@@ -181,7 +181,7 @@ export function SiteHeader() {
                 </p>
                 <CallbackDialog
                   triggerLabel="Оставить заявку"
-                  className="mt-6 w-full"
+                  className="on-dark mt-6 w-full"
                 />
               </div>
             </SheetContent>

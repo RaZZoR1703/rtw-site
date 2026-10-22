@@ -94,7 +94,7 @@ export function GalleryGrid() {
                     type="button"
                     onClick={() => go(-1)}
                     aria-label="Предыдущее фото"
-                    className="grid size-11 place-items-center rounded-full bg-white/10 hover:bg-white/20"
+                    className="grid size-11 place-items-center rounded-full bg-white/10 btn-icon btn-icon-light"
                   >
                     <ChevronLeft className="size-5" />
                   </button>
@@ -102,7 +102,7 @@ export function GalleryGrid() {
                     type="button"
                     onClick={() => go(1)}
                     aria-label="Следующее фото"
-                    className="grid size-11 place-items-center rounded-full bg-white/10 hover:bg-white/20"
+                    className="grid size-11 place-items-center rounded-full bg-white/10 btn-icon btn-icon-light"
                   >
                     <ChevronRight className="size-5" />
                   </button>
