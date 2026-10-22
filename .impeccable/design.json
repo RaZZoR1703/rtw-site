@@ -1,0 +1,625 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T07:48:01+00:00",
+  "title": "Design System: RTW / Right To Win",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Warm Ink",
+        "canonical": "#120d08",
+        "oklch": "oklch(16.4% 0.013 67.4)",
+        "tonalRamp": [
+          "#0f0a06",
+          "#2a241e",
+          "#47413b",
+          "#676059",
+          "#88817a",
+          "#aba49c",
+          "#cfc8c0",
+          "#f5ede5"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Lifted Ink",
+        "canonical": "#251c13",
+        "oklch": "oklch(23.4% 0.022 66.4)",
+        "tonalRamp": [
+          "#110903",
+          "#2c231a",
+          "#4a4036",
+          "#6a5f55",
+          "#8c8075",
+          "#afa397",
+          "#d3c7bb",
+          "#f9ece0"
+        ]
+      },
+      "starch": {
+        "role": "neutral",
+        "displayName": "Starch White",
+        "canonical": "#f6f4ee",
+        "oklch": "oklch(96.7% 0.008 91.5)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#262521",
+          "#43423d",
+          "#63615c",
+          "#84827d",
+          "#a7a59f",
+          "#cbc9c3",
+          "#f0eee8"
+        ]
+      },
+      "starch-2": {
+        "role": "neutral",
+        "displayName": "Sack Linen",
+        "canonical": "#ebe6da",
+        "oklch": "oklch(92.6% 0.017 88.0)",
+        "tonalRamp": [
+          "#0e0b04",
+          "#28251c",
+          "#464238",
+          "#656157",
+          "#868277",
+          "#a9a599",
+          "#cec9bd",
+          "#f3eee2"
+        ]
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "amber": {
+        "role": "primary",
+        "displayName": "Syrup Amber",
+        "canonical": "#f2a516",
+        "oklch": "oklch(77.8% 0.160 74.5)",
+        "tonalRamp": [
+          "#140800",
+          "#352000",
+          "#5a3b05",
+          "#815816",
+          "#ab7720",
+          "#d99620",
+          "#fbbc61",
+          "#feecd4"
+        ]
+      },
+      "amber-bright": {
+        "role": "primary",
+        "displayName": "Bright Amber",
+        "canonical": "#ffb52e",
+        "oklch": "oklch(82.3% 0.161 76.6)",
+        "tonalRamp": [
+          "#140900",
+          "#342100",
+          "#593c04",
+          "#7f5914",
+          "#aa781e",
+          "#d7971c",
+          "#febb4e",
+          "#ffecd1"
+        ]
+      },
+      "amber-deep": {
+        "role": "primary",
+        "displayName": "Deep Amber",
+        "canonical": "#b86a06",
+        "oklch": "oklch(59.9% 0.136 62.1)",
+        "tonalRamp": [
+          "#160700",
+          "#391d02",
+          "#60370a",
+          "#8d5008",
+          "#bb6c0d",
+          "#e1903f",
+          "#fdb97c",
+          "#feeada"
+        ]
+      },
+      "text-soft": {
+        "role": "neutral",
+        "displayName": "Soft Brown Text",
+        "canonical": "#5b5146",
+        "oklch": "oklch(44.1% 0.022 69.9)",
+        "tonalRamp": [
+          "#110903",
+          "#2c2319",
+          "#4a4036",
+          "#6a5f54",
+          "#8b8074",
+          "#aea397",
+          "#d3c7ba",
+          "#f8ecdf"
+        ]
+      },
+      "brand-red": {
+        "role": "status",
+        "displayName": "Brand Red",
+        "canonical": "#d7262e",
+        "oklch": "oklch(56.9% 0.210 25.4)",
+        "tonalRamp": [
+          "#200000",
+          "#4b0508",
+          "#80010f",
+          "#b41521",
+          "#e5373a",
+          "#fe746c",
+          "#ffb3ab",
+          "#fee9e7"
+        ]
+      },
+      "stock-green-bg": {
+        "role": "status",
+        "displayName": "In-Stock Green Wash",
+        "canonical": "#e7f4ea",
+        "oklch": "oklch(95.5% 0.019 152.8)",
+        "tonalRamp": [
+          "#050e07",
+          "#1e2821",
+          "#3b453d",
+          "#59655c",
+          "#7a867d",
+          "#9da99f",
+          "#c0cdc3",
+          "#e5f2e8"
+        ]
+      },
+      "stock-green-text": {
+        "role": "status",
+        "displayName": "In-Stock Green Text",
+        "canonical": "#1d6b34",
+        "oklch": "oklch(46.7% 0.114 149.2)",
+        "tonalRamp": [
+          "#001002",
+          "#002e0e",
+          "#055021",
+          "#26733b",
+          "#4b955b",
+          "#6fb97d",
+          "#93dea0",
+          "#c8ffd1"
+        ]
+      },
+      "stock-green-dot": {
+        "role": "status",
+        "displayName": "In-Stock Green Dot",
+        "canonical": "#1d9b4a",
+        "oklch": "oklch(60.6% 0.158 149.7)",
+        "tonalRamp": [
+          "#001003",
+          "#042e11",
+          "#025021",
+          "#147436",
+          "#1e9b4a",
+          "#4dc06d",
+          "#75e590",
+          "#cbfed4"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home hero headline only; three stacked lines that rise word by word."
+      },
+      "display-page": {
+        "displayName": "Display Page",
+        "purpose": "H1 on every inner page hero over a darkened photo."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Every section H2."
+      },
+      "headline-product": {
+        "displayName": "Headline Product",
+        "purpose": "Product page H1 beside the photo."
+      },
+      "headline-panel": {
+        "displayName": "Headline Panel",
+        "purpose": "H2 inside the closing lead panel."
+      },
+      "title-display": {
+        "displayName": "Title Display",
+        "purpose": "Unbounded titles on photo tiles and the industries list."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Product names on cards, FAQ questions."
+      },
+      "price-hero": {
+        "displayName": "Price Hero",
+        "purpose": "Product page price per kg, tabular."
+      },
+      "price": {
+        "displayName": "Price",
+        "purpose": "Card and band prices, tabular; unit drops to Golos text-soft."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Hero and section leads, 18-20px."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running copy and answers."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, footer heads, meta lines."
+      }
+    },
+    "contrast": [
+      {
+        "pair": "ink on starch",
+        "ratio": 17.57
+      },
+      {
+        "pair": "ink on card-white",
+        "ratio": 19.32
+      },
+      {
+        "pair": "ink on starch-2",
+        "ratio": 15.52
+      },
+      {
+        "pair": "text-soft on starch",
+        "ratio": 7.04
+      },
+      {
+        "pair": "text-soft on card-white",
+        "ratio": 7.75
+      },
+      {
+        "pair": "text-soft on starch-2",
+        "ratio": 6.22
+      },
+      {
+        "pair": "ink on amber",
+        "ratio": 9.36
+      },
+      {
+        "pair": "ink on amber-bright",
+        "ratio": 10.95
+      },
+      {
+        "pair": "ink at 70% on amber",
+        "ratio": 5.04
+      },
+      {
+        "pair": "amber on ink",
+        "ratio": 9.36
+      },
+      {
+        "pair": "amber on ink-2",
+        "ratio": 8.11
+      },
+      {
+        "pair": "amber-deep on starch",
+        "ratio": 3.74,
+        "note": "large text, icons, hover only"
+      },
+      {
+        "pair": "amber-deep on card-white",
+        "ratio": 4.12,
+        "note": "large text, icons, hover only"
+      },
+      {
+        "pair": "brand-red on starch",
+        "ratio": 4.54
+      },
+      {
+        "pair": "brand-red on card-white",
+        "ratio": 4.99
+      },
+      {
+        "pair": "stock-green-text on stock-green-bg",
+        "ratio": 5.78
+      },
+      {
+        "pair": "starch on ink",
+        "ratio": 17.57
+      },
+      {
+        "pair": "starch on ink-2",
+        "ratio": 15.22
+      },
+      {
+        "pair": "starch 85% on ink",
+        "ratio": 12.68
+      },
+      {
+        "pair": "starch 75% on ink",
+        "ratio": 9.98
+      },
+      {
+        "pair": "starch 70% on ink",
+        "ratio": 8.83
+      },
+      {
+        "pair": "starch 65% on ink",
+        "ratio": 7.69
+      },
+      {
+        "pair": "starch 60% on ink",
+        "ratio": 6.72
+      },
+      {
+        "pair": "starch 50% on ink",
+        "ratio": 4.93
+      }
+    ],
+    "shadows": [
+      {
+        "name": "header-hairline",
+        "value": "0 1px 0 rgb(18 13 8 / 0.08)",
+        "purpose": "Under the solid sticky header only."
+      },
+      {
+        "name": "button-focus-halo",
+        "value": "outline: 2px solid #f2a516; outline-offset: 2px; box-shadow: 0 0 0 2px #120d08",
+        "purpose": "Focus-visible on every button; reads on light, amber and ink."
+      },
+      {
+        "name": "global-focus",
+        "value": "outline: 2px solid #b86a06; outline-offset: 3px",
+        "purpose": "Focus-visible on links, fields and other controls."
+      },
+      {
+        "name": "header-blur",
+        "value": "backdrop-filter: blur(12px) over starch at 90%",
+        "purpose": "The single permitted backdrop blur: solid sticky header."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-settle",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All entrances, image zooms, reveals and photo swaps."
+      },
+      {
+        "name": "hero-word",
+        "value": "translateY(105%) to 0, 900ms ease-settle, delay 120ms + i*110ms",
+        "purpose": "Home headline words rising in masks; CSS, ends visible."
+      },
+      {
+        "name": "hero-rise",
+        "value": "translateY(18px), opacity 0.001 to 1, 900ms ease-settle",
+        "purpose": "Hero leads, buttons, stat panel, page-hero crumbs/H1/lead, product photo."
+      },
+      {
+        "name": "scroll-settle",
+        "value": "8-24px offset, opacity held at 1, 0.4-0.6s, staggered 0.06-0.1s, once",
+        "purpose": "Tiles, cards and list items entering view."
+      },
+      {
+        "name": "hover-zoom",
+        "value": "scale 1.06-1.07, 900ms (cards, gallery) or 1200ms (direction tiles), ease-settle",
+        "purpose": "Photo hover inside panels."
+      },
+      {
+        "name": "photo-swap",
+        "value": "opacity 0 and scale 1.06 to 1, 700ms ease-settle",
+        "purpose": "Industries photo cross-fade."
+      },
+      {
+        "name": "row-reveal",
+        "value": "grid-template-rows 0fr to 1fr with opacity, 500ms ease-settle",
+        "purpose": "Industries description expand."
+      },
+      {
+        "name": "color-swap",
+        "value": "200-300ms",
+        "purpose": "Button, pill and header colour transitions."
+      },
+      {
+        "name": "parallax",
+        "value": "translateY -10% to 10% across section scroll",
+        "purpose": "About band photograph."
+      },
+      {
+        "name": "marquee",
+        "value": "48s linear loop, 3rem gap, pause on hover",
+        "purpose": "Price band."
+      },
+      {
+        "name": "syrup-field",
+        "value": "WebGL2 domain-warped flow; paused offscreen; single frame under reduced motion; radial amber-to-ink gradient fallback",
+        "purpose": "Home hero signature."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "MotionConfig reducedMotion=user; CSS entrances and smooth scroll off",
+        "purpose": "Global respect for the user setting."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Amber Button",
+      "kind": "button",
+      "refersTo": "button-amber",
+      "description": "Primary action of a region: catalog, request, submit, add to cart.",
+      "html": "<button class=\"ds-btn-amber\">Каталог и цены <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-amber{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 28px;border:0;border-radius:9999px;background:#f2a516;color:#120d08;font:600 17px/1 'Golos Text',sans-serif;cursor:pointer;transition:background-color .2s}.ds-btn-amber svg{transition:transform .3s}.ds-btn-amber:hover{background:#ffb52e}.ds-btn-amber:hover svg{transform:translateX(4px)}.ds-btn-amber:focus-visible{outline:2px solid #f2a516;outline-offset:2px;box-shadow:0 0 0 2px #120d08}"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Secondary action on light grounds.",
+      "html": "<button class=\"ds-btn-ink\">Получить прайс</button>",
+      "css": ".ds-btn-ink{height:48px;padding:0 24px;border:0;border-radius:9999px;background:#120d08;color:#f6f4ee;font:600 16px/1 'Golos Text',sans-serif;cursor:pointer;transition:background-color .2s}.ds-btn-ink:hover{background:#251c13}.ds-btn-ink:focus-visible{outline:2px solid #f2a516;outline-offset:2px;box-shadow:0 0 0 2px #120d08}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Tertiary action on ink or photo grounds only.",
+      "html": "<div style=\"background:#120d08;padding:24px\"><button class=\"ds-btn-ghost\">Перезвоните мне</button></div>",
+      "css": ".ds-btn-ghost{height:44px;padding:0 20px;border:0;border-radius:9999px;background:rgb(255 255 255/.1);color:#f6f4ee;box-shadow:inset 0 0 0 1px rgb(255 255 255/.25);font:600 15px/1 'Golos Text',sans-serif;cursor:pointer;transition:background-color .2s}.ds-btn-ghost:hover{background:rgb(255 255 255/.2)}.ds-btn-ghost:focus-visible{outline:2px solid #f2a516;outline-offset:2px}"
+    },
+    {
+      "name": "Category Filter Bar",
+      "kind": "chip",
+      "refersTo": "filter-bar",
+      "description": "Pill track of category filters with tabular counts; selected pill is solid ink.",
+      "html": "<ul class=\"ds-filter\"><li><a class=\"ds-filter-pill is-on\" href=\"#\">Все товары <span>7</span></a></li><li><a class=\"ds-filter-pill\" href=\"#\">Крахмал <span>2</span></a></li><li><a class=\"ds-filter-pill\" href=\"#\">Патока и сиропы <span>3</span></a></li><li><a class=\"ds-filter-pill\" href=\"#\">Химия <span>2</span></a></li></ul>",
+      "css": ".ds-filter{display:flex;width:max-content;gap:8px;margin:0;padding:6px;list-style:none;border-radius:9999px;background:#ebe6da}.ds-filter-pill{display:flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:9999px;color:#120d08;text-decoration:none;font:600 16px/1 'Golos Text',sans-serif;transition:background-color .2s}.ds-filter-pill span{font-size:14px;font-variant-numeric:tabular-nums;color:#5b5146}.ds-filter-pill:hover{background:#fff}.ds-filter-pill.is-on{background:#120d08;color:#f6f4ee}.ds-filter-pill.is-on span{color:#f2a516}.ds-filter-pill:focus-visible{outline:2px solid #b86a06;outline-offset:3px}"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "product-card",
+      "description": "Full-bleed 4:3 photo with category and in-stock pills, title, origin, tabular price per kg, minimum batch, amber add disc.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-media\"><div class=\"ds-card-img\"></div><span class=\"ds-tag\">Крахмал</span><span class=\"ds-stock\"><i></i>В наличии</span></div><div class=\"ds-card-body\"><h3>Крахмал кукурузный (высший сорт)</h3><p class=\"ds-soft\">Производство: Казахстан</p><div class=\"ds-card-row\"><div><p class=\"ds-price\">7 836<small>сум/кг</small></p><p class=\"ds-soft\">Мин. партия: от 100 кг</p></div><button class=\"ds-add\" aria-label=\"В корзину\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M5 12h14\"/><path d=\"M12 5v14\"/></svg></button></div></div></article>",
+      "css": ".ds-card{width:340px;overflow:hidden;border-radius:24px;background:#fff;box-shadow:inset 0 0 0 1px rgb(18 13 8/.08);color:#120d08;font-family:'Golos Text',sans-serif}.ds-card-media{position:relative;aspect-ratio:4/3;overflow:hidden;background:#ebe6da}.ds-card-img{position:absolute;inset:0;background:radial-gradient(80% 90% at 50% 40%,#fff 0%,#e6dccb 55%,#b9a487 100%);transition:transform .9s cubic-bezier(.16,1,.3,1)}.ds-card:hover .ds-card-img{transform:scale(1.07)}.ds-tag,.ds-stock{position:absolute;top:16px;padding:4px 12px;border-radius:9999px;font-size:12px;font-weight:600}.ds-tag{left:16px;background:rgb(255 255 255/.9);box-shadow:inset 0 0 0 1px rgb(18 13 8/.1)}.ds-stock{right:16px;display:inline-flex;align-items:center;gap:6px;background:#e7f4ea;color:#1d6b34}.ds-stock i{width:6px;height:6px;border-radius:50%;background:#1d9b4a}.ds-card-body{padding:24px}.ds-card-body h3{margin:0;font-size:18px;font-weight:600;line-height:1.375}.ds-card:hover h3{color:#b86a06}.ds-soft{margin:4px 0 0;font-size:14px;color:#5b5146}.ds-card-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding-top:24px}.ds-price{margin:0;font:700 28px/1 Unbounded,sans-serif;letter-spacing:-.025em;font-variant-numeric:tabular-nums}.ds-price small{margin-left:6px;font:500 14px 'Golos Text',sans-serif;color:#5b5146}.ds-add{display:grid;place-items:center;width:48px;height:48px;border:0;border-radius:50%;background:#f2a516;color:#120d08;cursor:pointer;transition:background-color .2s}.ds-add:hover{background:#ffb52e}.ds-add:focus-visible{outline:2px solid #f2a516;outline-offset:2px;box-shadow:0 0 0 2px #120d08}"
+    },
+    {
+      "name": "Lead Form Field",
+      "kind": "input",
+      "refersTo": "input-light",
+      "description": "Light ringed field with soft label; dark variant on ink panels.",
+      "html": "<label class=\"ds-field\"><span>Телефон</span><input type=\"tel\" placeholder=\"+998\"></label>",
+      "css": ".ds-field{display:grid;gap:8px;width:320px;font-family:'Golos Text',sans-serif}.ds-field span{font-size:14px;font-weight:500;color:#5b5146}.ds-field input{height:48px;padding:0 16px;border:0;border-radius:16.8px;background:#fff;box-shadow:inset 0 0 0 1px rgb(18 13 8/.15);font-size:16px;color:#120d08;caret-color:#b86a06}.ds-field input:focus-visible{outline:2px solid #b86a06;outline-offset:3px}"
+    },
+    {
+      "name": "Site Header",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Fixed header; transparent over the home hero, solid starch with blur and hairline after scroll and on inner pages.",
+      "html": "<header class=\"ds-header\"><span class=\"ds-logo\">RTW<svg width=\"10\" height=\"12\" viewBox=\"0 0 10 12\"><path d=\"M5 0C5 0 0 6 0 8.5A5 5 0 0 0 10 8.5C10 6 5 0 5 0Z\" fill=\"#f2a516\"/></svg></span><nav><a class=\"is-on\" href=\"#\">Каталог</a><a href=\"#\">Оплата и доставка</a><a href=\"#\">Галерея</a><a href=\"#\">Контакты</a></nav><span class=\"ds-phone\">+998 99 392 23 05</span><button class=\"ds-hbtn\">Оставить заявку</button></header>",
+      "css": ".ds-header{display:flex;align-items:center;gap:24px;height:72px;padding:0 32px;background:rgb(246 244 238/.9);backdrop-filter:blur(12px);box-shadow:0 1px 0 rgb(18 13 8/.08);color:#120d08;font-family:'Golos Text',sans-serif}.ds-logo{font:900 22px/1 Unbounded,sans-serif;letter-spacing:-.02em}.ds-header nav{display:flex;gap:4px}.ds-header nav a{padding:8px 14px;border-radius:9999px;color:inherit;text-decoration:none;font-size:15px;font-weight:500;transition:background-color .2s}.ds-header nav a:hover{background:rgb(18 13 8/.05)}.ds-header nav a.is-on{background:#120d08;color:#f6f4ee}.ds-phone{margin-left:auto;font-weight:600;font-variant-numeric:tabular-nums}.ds-hbtn{height:44px;padding:0 20px;border:0;border-radius:9999px;background:#f2a516;color:#120d08;font:600 15px 'Golos Text',sans-serif;cursor:pointer}.ds-hbtn:hover{background:#ffb52e}"
+    },
+    {
+      "name": "Batch Calculator",
+      "kind": "custom",
+      "refersTo": "batch-calculator",
+      "description": "Quantity stepper clamped to the minimum batch, step 100kg or 25kg, live tabular total.",
+      "html": "<div class=\"ds-calc\"><span class=\"ds-calc-l\">Объём партии, кг</span><div class=\"ds-calc-row\"><button disabled aria-label=\"Меньше\">−</button><output>100</output><button aria-label=\"Больше\">+</button></div><p class=\"ds-calc-l\">Минимальная партия — 100 кг; меньше положить нельзя.</p><div class=\"ds-calc-sum\"><span>Сумма</span><strong>783 600 <small>сум</small></strong></div></div>",
+      "css": ".ds-calc{width:360px;padding:24px;border-radius:26.4px;background:#fff;box-shadow:inset 0 0 0 1px rgb(18 13 8/.1);font-family:'Golos Text',sans-serif;color:#120d08}.ds-calc-l{margin:12px 0 0;font-size:14px;font-weight:500;color:#5b5146}.ds-calc-row{display:flex;gap:8px;margin-top:8px}.ds-calc-row button{width:48px;height:48px;border:0;border-radius:50%;background:#ebe6da;font-size:18px;cursor:pointer}.ds-calc-row button:hover{background:rgb(18 13 8/.1)}.ds-calc-row button:disabled{opacity:.4;cursor:default}.ds-calc-row output{flex:1;display:grid;place-items:center;height:48px;border-radius:16.8px;background:#f6f4ee;box-shadow:inset 0 0 0 1px rgb(18 13 8/.1);font:700 20px Unbounded,sans-serif;font-variant-numeric:tabular-nums}.ds-calc-sum{display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;padding-top:20px;border-top:1px solid rgb(18 13 8/.1);color:#5b5146}.ds-calc-sum strong{font:700 30px Unbounded,sans-serif;color:#120d08;font-variant-numeric:tabular-nums}.ds-calc-sum small{font:500 16px 'Golos Text',sans-serif;color:#5b5146}"
+    },
+    {
+      "name": "Price Band",
+      "kind": "custom",
+      "refersTo": "price-band",
+      "description": "Full-width amber marquee of wholesale prices under the hero; pauses on hover.",
+      "html": "<div class=\"ds-band\"><div class=\"ds-band-track\"><a href=\"#\"><b>Патока карамельная</b><em>9 283</em><small>сум/кг</small></a><a href=\"#\"><b>Патока кислотная</b><em>9 645</em><small>сум/кг</small></a><a href=\"#\"><b>Каустическая сода</b><em>13 141</em><small>сум/кг</small></a></div></div>",
+      "css": ".ds-band{overflow:hidden;padding:20px 0;background:#f2a516;color:#120d08;font-family:'Golos Text',sans-serif}.ds-band-track{display:flex;gap:48px;width:max-content;animation:ds-marquee 24s linear infinite}.ds-band:hover .ds-band-track{animation-play-state:paused}.ds-band a{display:flex;align-items:baseline;gap:12px;color:inherit;text-decoration:none;white-space:nowrap}.ds-band a:hover{text-decoration:underline}.ds-band b{font-size:17px;font-weight:600}.ds-band em{font:700 24px Unbounded,sans-serif;font-style:normal;font-variant-numeric:tabular-nums}.ds-band small{font-size:14px;font-weight:500;color:rgb(18 13 8/.7)}@keyframes ds-marquee{to{transform:translateX(-50%)}}@media (prefers-reduced-motion:reduce){.ds-band-track{animation:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Liquid Amber",
+    "overview": "**Creative North Star: \"Liquid Amber\"**\n\nThe product is the light source. Wholesale syrup, molasses and starch are rendered as a warm, viscous amber that flows under the first viewport and then condenses into the one action colour of the whole site. Everything else is two grounds: a warm near-black ink for weight and night, and a starch white for reading and pricing. Pages alternate between the two in broad, full-width bands, so a scroll reads as ink, starch, ink, starch, with the amber price band stitched in at the fold.\n\nDensity is generous at the section level and tight inside the information that matters: price per kilogram, minimum batch and availability are set large, tabular and close together on every card and product page. Photography is real and full-bleed, darkened on ink grounds and object-cover inside large, soft-cornered panels; it never sits on a plate inside another plate. Motion is slow and settling (a long ease-out curve on everything), arrives once, and always ends with content visible.\n\nThe world refuses the raw-materials-supplier default: a stock-photo hero with a red \"leave a request\" button, glass ornament, eyebrow labels and numbered sections.",
+    "keyCharacteristics": [
+      "Two grounds (ink and starch) in alternating full-width bands; amber is the single action and price-highlight colour.",
+      "Unbounded display at extreme sizes with tight negative tracking; Golos Text for everything read.",
+      "Tabular figures on every price, quantity, phone number and count.",
+      "Large-radius photo panels (22–32px) and full-pill controls; nothing square, nothing sharp.",
+      "A live WebGL syrup field as the home hero; darkened full-bleed photo heroes on every inner page.",
+      "One long ease-out curve (cubic-bezier(0.16, 1, 0.3, 1)) for entrances, hovers and swaps."
+    ],
+    "rules": [
+      {
+        "name": "The One Amber Rule",
+        "body": "Amber marks what you can press or what something costs, nothing else. No amber section washes except the price band, no amber decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Grounds Rule",
+        "body": "Every section sits on ink or on starch at full width; there is no third tinted section ground. starch-2 and white are surfaces inside a starch section, never section grounds.",
+        "section": "colors"
+      },
+      {
+        "name": "The Opacity Ladder Rule",
+        "body": "Secondary text on ink is starch at a stated opacity, never a new grey, and never below 50% for text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every price, quantity, count, phone number and year is set with tabular figures. A number that can change or be compared never uses proportional digits.",
+        "section": "typography"
+      },
+      {
+        "name": "The Unit Steps Down Rule",
+        "body": "A price numeral is Unbounded; its unit is Golos, smaller and in text-soft. Never set the unit in the display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Eyebrow Rule",
+        "body": "Headings stand alone. Nothing small, uppercase or tracked sits above a heading to introduce it; context goes in the lead under it.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Step From A Call Rule",
+        "body": "Every screen carries a phone number or a callback trigger within reach: the header phone and \"Оставить заявку\", and the closing lead panel with all phone numbers.",
+        "section": "layout"
+      },
+      {
+        "name": "The Ring Not Shadow Rule",
+        "body": "Raised surfaces are separated by a hairline ring and a ground change. No drop shadows on cards, panels or buttons.",
+        "section": "elevation"
+      },
+      {
+        "name": "The No Glass Rule",
+        "body": "No translucent frosted panels. The sticky header is the single backdrop-blur in the system.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Pill Or Panel Rule",
+        "body": "There are two shapes: the pill for controls and the soft panel for content. No square corners, no small 4–8px radii on visible surfaces.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do keep amber for actions, prices on ink and the price band; hover amber to amber-bright, never to a darker amber.",
+      "Do set every price, minimum, count and phone in tabular figures, with the unit stepped down to Golos in text-soft.",
+      "Do put real photography full-bleed inside 22–32px panels, object-cover, darkened with an ink gradient wherever text sits on it.",
+      "Do label any stock or illustrative photograph that sits near a claim about RTW's own warehouse or stock with the \"Иллюстрация\" pill.",
+      "Do end every entrance animation visible: hold opacity at 1 and animate position only, and freeze or skip motion under reduced motion.",
+      "Do separate surfaces with hairline rings and ground changes rather than shadows.",
+      "Do keep starch text on ink at 50% opacity or higher, and keep deep amber off body-size resting text."
+    ],
+    "donts": [
+      "Don't add glass, frosted panels or backdrop blur anywhere except the sticky header.",
+      "Don't place an eyebrow or kicker label above a heading, and don't number sections.",
+      "Don't set a product photo on a matte plate inside another plate; the photo fills its panel.",
+      "Don't show a stock warehouse photograph beside the Tashkent-stock claim without the \"Иллюстрация\" label.",
+      "Don't introduce a third section ground colour or tint sections with amber, apart from the price band.",
+      "Don't use square or small-radius corners on visible surfaces, or drop shadows on cards and buttons.",
+      "Don't use the red as an action colour; brand-red is for errors only."
+    ]
+  }
+}
